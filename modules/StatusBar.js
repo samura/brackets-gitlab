@@ -8,7 +8,11 @@ define( function( require, exports ) {
         // Extension Modules.
         Gitlab = require( 'modules/Gitlab' ),
         Strings = require( 'modules/Strings' ),
+        Git = require( 'modules/Git' ),
         DropdownButton = brackets.getModule( 'widgets/DropdownButton' ).DropdownButton,
+
+        // dropdown values
+        issueActionList = [Strings.CLOSE_ISSUE, Strings.SELECT_OTHER_ISSUE],
 
         // Variables.
         $indicator,
@@ -70,9 +74,16 @@ define( function( require, exports ) {
 
             preferences.set('project', project, { location: { scope: 'project' } });
             // remove selected issue when changing project
-            preferences.set( 'issue', undefined );
-            preferences.save();
+            _clearIssue();
         });
+    }
+
+    /**
+     * Clear the issue you were working on
+     */
+    function _clearIssue() {
+        preferences.set( 'issue', undefined, { location: { scope: 'project' } });
+        preferences.save();
     }
 
     /**
@@ -91,6 +102,24 @@ define( function( require, exports ) {
             preferences.set('issue', issue, { location: { scope: 'project' } });
             preferences.save();
         } );
+    }
+
+    /**
+     * Retrieve updated issue information
+     * @param Event select DOM Object
+     * @param String label selected item
+     * @param Integer index Selected item index
+     */
+    function _issueAction(select, label, index) {
+
+        switch(label) {
+            case Strings.CLOSE_ISSUE: // close issue
+                Git.closeIssue( preferences.get( 'issue' ) );
+                break;
+            case Strings.SELECT_OTHER_ISSUE: // select another
+                _clearIssue();
+                break;
+        }
     }
 
     /**
@@ -113,6 +142,7 @@ define( function( require, exports ) {
      * @param object project Selected project
      */
     function _renderIssueSelect( project ) {
+
         // set the dropdown and select event listeners
         issueSelect = new DropdownButton( Strings.SELECT_ISSUE, [] );
         issueSelect.$button.addClass( 'btn-status-bar' );
@@ -130,13 +160,13 @@ define( function( require, exports ) {
      */
     function _renderIssue( issue ) {
         // set the dropdown and select event listeners
-        issueActions = new DropdownButton( issue.title, [] );
+        issueActions = new DropdownButton( issue.title, issueActionList);
         issueActions.$button.addClass( 'btn-status-bar' );
         $indicator.html( issueActions.$button );
         StatusBar.updateIndicator( 'samura.gitlab', true, '', issue.title );
 
         // save the selected gitlab issue
-//        issueActions.on( 'select', _issueSelected );
+        issueActions.on( 'select', _issueAction );
     }
 
     /**

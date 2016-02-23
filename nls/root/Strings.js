@@ -12,5 +12,9 @@ define( {
 
     // STATUS BAR
     SELECT_PROJECT: 'Select a Gitlab Project',
-    SELECT_ISSUE: 'Select an issue to work on'
+    SELECT_ISSUE: 'Select an issue to work on',
+
+    COMMIT_MESSAGE_CLOSE: '#TITLE# - closes ##ID#',
+    CLOSE_ISSUE: 'Close this issue',
+    SELECT_OTHER_ISSUE: 'Work on another issue'
 } );
