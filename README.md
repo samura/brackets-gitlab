@@ -28,7 +28,7 @@ You'll need to install it manually.
 
 1. Open the the Extension Manager from the File menu.
 2. Click on Install form URL...
-3. Copy and paste following URL in the text field: https://github.com/mikaeljorhult/brackets-php-code-quality-tools
+3. Copy and paste following URL in the text field: https://github.com/samura/brackets-gitlab
 4. Click Install
 5. Open a terminal on the `extensions/user/samura.brackets-gitlab/node/`
 6. Run `npm i`
