@@ -5,7 +5,8 @@ Integrate Brackets with gitlab.
 ## Objectives
 
 * Always have the issue you're working on accessible from brackets.
-* Ability to close a Gitlab issue by commiting all the modified files (works with extension Brackets-Git)
+* Ability to close a Gitlab issue by commiting all the modified files (works with extension Brackets-Git).
+* Ability to reference an issue on submit.
 
 
 ## Installation
@@ -20,7 +21,12 @@ Follow the [instructions](https://github.com/zaggino/brackets-git/).
 The plugin is not yet on the extension registry.
 You'll need to install it manually.
 
-1. Open the the Extension Manager from the File menu.
-2. Click on Install form URL...
-3. Copy and paste following URL in the text field: `https://github.com/samura/brackets-gitlab`
-4. Click Install.
+1. Download this extension using the ZIP button and unzip it.
+2. Copy it in Brackets `/extensions/user` folder by selecting **Help > Show Extension Folder**.
+3. Run `npm i` inside `node/` folder
+3. Reload Brackets.
+
+
+### Configuration
+
+Go to **View > Brackets Gitlab** and configure your Gitlab account.
