@@ -1,8 +1,8 @@
 {
-  "name": "samura.bracketsGitlab",
+  "name": "samura.brackets-gitlab",
   "title": "Brackets Gitlab",
   "description": "Gitlab Integration with Brackets",
-  "homepage": "https://github.com/yourname/yourproject",
+  "homepage": "https://github.com/samura/brackets-gitlab",
   "version": "1.0.0",
   "author": "João Campos <joao.campos@samura.pt> (http://www.samura.pt)",
   "license": "MIT",
@@ -12,8 +12,5 @@
   "i18n": [
     "en"
   ],
-  "package-i18n": {},
-  "dependencies": {
-    "node-gitlab": "^1.2.1"
-  }
+  "package-i18n": {}
 }
