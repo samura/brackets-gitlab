@@ -14,7 +14,7 @@ define( {
     SELECT_PROJECT: 'Select a Gitlab Project',
     SELECT_ISSUE: 'Select an issue to work on',
 
-    COMMIT_MESSAGE_CLOSE: '#TITLE# - closes ##ID#',
+    COMMIT_MESSAGE_CLOSE: 'closes ##ID# - #TITLE#',
     COMMIT_MESSAGE_MENTION: '##ID# - #TITLE#',
     CLOSE_ISSUE: 'Close this issue',
     MENTION_ISSUE: 'Commit with link to the issue',
