@@ -2,10 +2,8 @@ define( function( require, exports ) {
     'use strict';
 
     var Strings = require( 'modules/Strings' );
-    /**
-     * close issue
-     */
-    exports.closeIssue  = function ( issue ) {
+
+    function _doCommit ( message ) {
         // open the panel
         $('#git-toolbar-icon:not(.on)').click();
 
@@ -13,13 +11,6 @@ define( function( require, exports ) {
         if(!$('.check-all.git-available').prop('checked')) {
             $('.check-all.git-available').click();
         }
-        // had to do this on another line because it was not indenting right
-        var message;
-        // set the commit message
-        message = Strings
-            .COMMIT_MESSAGE_CLOSE
-            .replace('#ID#', issue.id)
-            .replace('#TITLE#', issue.title);
 
         // check when the commit button is available for a minute
         setTimeout(function(){
@@ -48,7 +39,39 @@ define( function( require, exports ) {
             // stop writting the same message when regaining focus
             $('body').off('focus', '*[name=commit-message]');
         });
+    }
+
+    /**
+     * close issue
+     */
+    exports.closeIssue = function ( issue ) {
+
+        // had to do this on another line because it was not indenting right
+        var message;
+        // set the commit message
+        message = Strings
+            .COMMIT_MESSAGE_CLOSE
+            .replace('#ID#', issue.id)
+            .replace('#TITLE#', issue.title);
+
+        _doCommit( message );
     };
+
+    /**
+     * Commit the modified files with a message mentioning the issue #
+     */
+    exports.mentionIssue = function ( issue) {
+
+        // had to do this on another line because it was not indenting right
+        var message;
+        // set the commit message
+        message = Strings
+            .COMMIT_MESSAGE_MENTION
+            .replace('#ID#', issue.id)
+            .replace('#TITLE#', issue.title);
+
+        _doCommit( message );
+    }
 
     /**
 	 * Exposed method to init

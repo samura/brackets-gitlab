@@ -15,6 +15,8 @@ define( {
     SELECT_ISSUE: 'Select an issue to work on',
 
     COMMIT_MESSAGE_CLOSE: '#TITLE# - closes ##ID#',
+    COMMIT_MESSAGE_MENTION: '##ID# - #TITLE#',
     CLOSE_ISSUE: 'Close this issue',
+    MENTION_ISSUE: 'Commit with link to the issue',
     SELECT_OTHER_ISSUE: 'Work on another issue'
 } );

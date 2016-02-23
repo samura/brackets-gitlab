@@ -12,7 +12,7 @@ define( function( require, exports ) {
         DropdownButton = brackets.getModule( 'widgets/DropdownButton' ).DropdownButton,
 
         // dropdown values
-        issueActionList = [Strings.CLOSE_ISSUE, Strings.SELECT_OTHER_ISSUE],
+        issueActionList = [Strings.SELECT_OTHER_ISSUE, '---', Strings.CLOSE_ISSUE, Strings.MENTION_ISSUE],
 
         // Variables.
         $indicator,
@@ -115,6 +115,9 @@ define( function( require, exports ) {
         switch(label) {
             case Strings.CLOSE_ISSUE: // close issue
                 Git.closeIssue( preferences.get( 'issue' ) );
+                break;
+            case Strings.MENTION_ISSUE: // close issue
+                Git.mentionIssue( preferences.get( 'issue' ) );
                 break;
             case Strings.SELECT_OTHER_ISSUE: // select another
                 _clearIssue();
