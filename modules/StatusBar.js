@@ -17,6 +17,8 @@ define( function( require, exports ) {
         // Variables.
         $indicator,
         projectSelect, // html <select>
+        issueOptions = [Strings.SELECT_OTHER_PROJECT, '---'],
+        issueOptionsOffset = issueOptions.length,
         projectList,
         preferences,
         issueSelect, // html <select>
@@ -24,6 +26,22 @@ define( function( require, exports ) {
         issueActions
     ;
 
+    /**
+     * Clear the issue you were working on
+     */
+    function _clearIssue() {
+        preferences.set( 'issue', undefined, { location: { scope: 'project' } });
+        preferences.save();
+    }
+
+    /**
+     * Clear the project you were working on
+     */
+    function _clearProject() {
+        preferences.set( 'project', undefined, { location: { scope: 'project' } });
+        preferences.save();
+    }
+    
     /**
      * populate the select box with projects
      */
@@ -49,12 +67,10 @@ define( function( require, exports ) {
 
             issueList = issues;
 
-            var issueOptions = [Strings.SELECT_OTHER_PROJECT, '---'];
-            var iOOffset = issueOptions.length;
             issues.forEach(function(item, index) {
-                issueOptions[index+iOOffset] = item.title;
+                issueOptions[index+issueOptionsOffset] = item.title;
                 if(item.assignee) {
-                    issueOptions[index+iOOffset] += ' (' + item.assignee.name + ')';
+                    issueOptions[index+issueOptionsOffset] += ' (' + item.assignee.name + ')';
                 }
             });
             issueSelect.items = issueOptions;
@@ -79,22 +95,6 @@ define( function( require, exports ) {
     }
 
     /**
-     * Clear the issue you were working on
-     */
-    function _clearIssue() {
-        preferences.set( 'issue', undefined, { location: { scope: 'project' } });
-        preferences.save();
-    }
-
-    /**
-     * Clear the project you were working on
-     */
-    function _clearProject() {
-        preferences.set( 'project', undefined, { location: { scope: 'project' } });
-        preferences.save();
-    }
-
-    /**
      * Retrieve updated issue information
      * @param Event select DOM Object
      * @param String label selected item
@@ -109,7 +109,7 @@ define( function( require, exports ) {
 
         var project = preferences.get( 'project' );
         // get the updated information on the project
-        Gitlab.issue( project.id, issueList[index].id, function( issue ){
+        Gitlab.issue( project.id, issueList[index-issueOptionsOffset].id, function( issue ){
 
             preferences.set('issue', issue, { location: { scope: 'project' } });
             preferences.save();
