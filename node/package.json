@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "node-gitlab": "^1.2.1"
+  }
+}

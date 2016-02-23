@@ -1,0 +1,79 @@
+{
+    "samura.bracketsGitlab.project": {
+        "id": 45,
+        "description": "",
+        "default_branch": "master",
+        "tag_list": [],
+        "public": false,
+        "archived": false,
+        "visibility_level": 0,
+        "ssh_url_to_repo": "git@gitlab.samura.pt:samura/aaumgotar.git",
+        "http_url_to_repo": "http://gitlab.samura.pt/samura/aaumgotar.git",
+        "web_url": "http://gitlab.samura.pt/samura/aaumgotar",
+        "name": "aaumgotar",
+        "name_with_namespace": "samura / aaumgotar",
+        "path": "aaumgotar",
+        "path_with_namespace": "samura/aaumgotar",
+        "issues_enabled": true,
+        "merge_requests_enabled": true,
+        "wiki_enabled": true,
+        "builds_enabled": true,
+        "snippets_enabled": false,
+        "created_at": "2015-12-14T17:52:05.408Z",
+        "last_activity_at": "2016-02-19T11:09:56.337Z",
+        "shared_runners_enabled": true,
+        "creator_id": 1,
+        "namespace": {
+            "id": 9,
+            "name": "samura",
+            "path": "samura",
+            "owner_id": 1,
+            "created_at": "2015-12-14T17:52:05.364Z",
+            "updated_at": "2016-01-21T17:39:38.085Z",
+            "description": "",
+            "avatar": {
+                "url": "/uploads/group/avatar/9/samura.png"
+            }
+        },
+        "avatar_url": "http://gitlab.samura.pt/uploads/project/avatar/45/aaum.png",
+        "star_count": 0,
+        "forks_count": 0,
+        "open_issues_count": 2,
+        "runners_token": "aa0578a1a15f65252e1d43ce942843",
+        "permissions": {
+            "project_access": null,
+            "group_access": {
+                "access_level": 50,
+                "notification_level": 3
+            }
+        }
+    },
+    "samura.bracketsGitlab.issue": {
+        "id": 145,
+        "iid": 26,
+        "project_id": 45,
+        "title": "Warnings ao gravar mais que 1 arquivo",
+        "description": "Warning: strlen() expects parameter 1 to be string, array given in /Users/samura/Sites/aaumgotar/lib/vendor/symfony/lib/plugins/sfDoctrinePlugin/lib/database/sfDoctrineConnectionProfiler.class.php on line 198\r\n\r\nNotice: Array to string conversion in /Users/samura/Sites/aaumgotar/lib/vendor/symfony/lib/plugins/sfDoctrinePlugin/lib/database/sfDoctrineConnectionProfiler.class.php on line 141\r\n\r\nNotice: Array to string conversion in /Users/samura/Sites/aaumgotar/lib/vendor/symfony/lib/plugins/sfDoctrinePlugin/lib/vendor/doctrine/Doctrine/Connection/Statement.php on line 252\r\n",
+        "state": "opened",
+        "created_at": "2016-02-16T10:01:27.121Z",
+        "updated_at": "2016-02-16T10:01:27.121Z",
+        "labels": [],
+        "milestone": null,
+        "assignee": {
+            "name": "Flávio",
+            "username": "Ferreira",
+            "id": 2,
+            "state": "active",
+            "avatar_url": "http://www.gravatar.com/avatar/5ddd991cd7e2220235abd13942adcd6c?s=80&d=identicon",
+            "web_url": "http://gitlab.samura.pt/u/Ferreira"
+        },
+        "author": {
+            "name": "João Campos",
+            "username": "root",
+            "id": 1,
+            "state": "active",
+            "avatar_url": "http://www.gravatar.com/avatar/6d2b63669cb7e263639114d0cf2b9128?s=80&d=identicon",
+            "web_url": "http://gitlab.samura.pt/u/root"
+        }
+    }
+}
