@@ -49,11 +49,12 @@ define( function( require, exports ) {
 
             issueList = issues;
 
-            var issueOptions = [];
+            var issueOptions = [Strings.SELECT_OTHER_PROJECT, '---'];
+            var iOOffset = issueOptions.length;
             issues.forEach(function(item, index) {
-                issueOptions[index] = item.title;
+                issueOptions[index+iOOffset] = item.title;
                 if(item.assignee) {
-                    issueOptions[index] += ' (' + item.assignee.name + ')';
+                    issueOptions[index+iOOffset] += ' (' + item.assignee.name + ')';
                 }
             });
             issueSelect.items = issueOptions;
@@ -68,7 +69,6 @@ define( function( require, exports ) {
      * @param Integer index Selected item index
      */
     function _projectSelected(select, label, index) {
-        console.log(typeof select); // escrever acima!!!!!!
         // get the updated information on the project
         Gitlab.project(projectList[index].id, function( project ){
 
@@ -87,6 +87,14 @@ define( function( require, exports ) {
     }
 
     /**
+     * Clear the project you were working on
+     */
+    function _clearProject() {
+        preferences.set( 'project', undefined, { location: { scope: 'project' } });
+        preferences.save();
+    }
+
+    /**
      * Retrieve updated issue information
      * @param Event select DOM Object
      * @param String label selected item
@@ -94,9 +102,13 @@ define( function( require, exports ) {
      */
     function _issueSelected(select, label, index) {
 
+        if(label === Strings.SELECT_OTHER_PROJECT) {
+            _clearProject();
+            return;
+        }
+
         var project = preferences.get( 'project' );
         // get the updated information on the project
-        console.log(issueList[index].id);
         Gitlab.issue( project.id, issueList[index].id, function( issue ){
 
             preferences.set('issue', issue, { location: { scope: 'project' } });
@@ -184,7 +196,6 @@ define( function( require, exports ) {
             var project = preferences.get( 'project' );
             var issue = preferences.get( 'issue' );
 
-            console.log(typeof changes.ids);
             // if project changed
             if(changes.ids.indexOf('project') !== -1) {
                 if (!project) {
@@ -202,7 +213,6 @@ define( function( require, exports ) {
                     _renderIssue( issue );
                 }
             }
-            console.log(preferences.get( 'project' ));
         });
 
         $indicator = $( '<div>' );

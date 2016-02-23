@@ -9,10 +9,12 @@ define( {
 
 	// SETTINGS DIALOG
 	SETTINGS_DIALOG_TITLE: 'Gitlab Configuration',
+    GITLAB_ERROR: 'There was a problem connection with Gitlab',
 
     // STATUS BAR
     SELECT_PROJECT: 'Select a Gitlab Project',
     SELECT_ISSUE: 'Select an issue to work on',
+    SELECT_OTHER_PROJECT: 'Connect with another project',
 
     COMMIT_MESSAGE_CLOSE: 'closes ##ID# - #TITLE#',
     COMMIT_MESSAGE_MENTION: '##ID# - #TITLE#',

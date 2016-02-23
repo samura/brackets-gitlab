@@ -4,12 +4,13 @@ define(function (require, exports, module) {
     var ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
         NodeDomain = brackets.getModule("utils/NodeDomain"),
         EventDispatcher = brackets.getModule("utils/EventDispatcher"),
+        Strings = require( 'modules/Strings' ),
 
         gitlabDomain = new NodeDomain("gitlab", ExtensionUtils.getModulePath(module, "../node/GitlabDomain")),
         preferences;
 
     function _error(err) {
-        console.error('Could not connect to gitlab');
+        console.error(Strings.GITLAB_ERROR);
         console.log(err);
     }
 
