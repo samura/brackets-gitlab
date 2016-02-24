@@ -3,8 +3,7 @@ define( function( require, exports ) {
 
     // status bar
     var StatusBar = brackets.getModule( 'widgets/StatusBar' ),
-        PreferencesManager = brackets.getModule( 'preferences/PreferencesManager' ),
-
+        
         // Extension Modules.
         Gitlab = require( 'modules/Gitlab' ),
         Strings = require( 'modules/Strings' ),
@@ -25,7 +24,7 @@ define( function( require, exports ) {
         issueSelect, // html <select>
         issueList, // project objects
         issueActions,
-        
+
         STATUS_BAR_ID = 'samura.brackets-gitlab.statusbar'
     ;
 
@@ -44,7 +43,7 @@ define( function( require, exports ) {
         preferences.set( 'project', undefined, { location: { scope: 'project' } });
         preferences.save();
     }
-    
+
     /**
      * populate the select box with projects
      */
@@ -88,13 +87,8 @@ define( function( require, exports ) {
      * @param Integer index Selected item index
      */
     function _projectSelected(select, label, index) {
-        // get the updated information on the project
-        Gitlab.project(projectList[index].id, function( project ){
-
-            preferences.set('project', project, { location: { scope: 'project' } });
-            // remove selected issue when changing project
-            _clearIssue();
-        });
+        Gitlab.getProjectAndSave( projectList[index].id );
+        _clearIssue();
     }
 
     /**
@@ -111,21 +105,15 @@ define( function( require, exports ) {
         }
 
         var project = preferences.get( 'project' );
-        // get the updated information on the project
-        Gitlab.issue( project.id, issueList[index-issueOptionsOffset].id, function( issue ){
-
-            preferences.set('issue', issue, { location: { scope: 'project' } });
-            preferences.save();
-        } );
+        Gitlab.getIssueAndSave( project.id, issueList[index-issueOptionsOffset].id );
     }
 
     /**
      * Retrieve updated issue information
      * @param Event select DOM Object
      * @param String label selected item
-     * @param Integer index Selected item index
      */
-    function _issueAction(select, label, index) {
+    function _issueAction(select, label) {
 
         switch(label) {
             case Strings.CLOSE_ISSUE: // close issue
@@ -182,7 +170,7 @@ define( function( require, exports ) {
         issueActions.$button.addClass( 'btn-status-bar' );
         var $view = $('<span class="view-issue"></span>');
         $indicator.html( $view );
-        
+
         $indicator.append( issueActions.$button );
         StatusBar.updateIndicator( STATUS_BAR_ID, true, '', issue.title );
 
@@ -199,33 +187,25 @@ define( function( require, exports ) {
     exports.init = function( prefs ) {
         preferences = prefs;
 
+        console.log('init');
         // detect preferences changes
-        preferences.on('change', function(event, changes) {
+        preferences.on('change', function() {
 
             var project = preferences.get( 'project' );
             var issue = preferences.get( 'issue' );
 
+            console.log('detected something');
             // if project changed
-            if(changes.ids.indexOf('project') !== -1) {
-                if (!project) {
-                    _renderProjectSelect();
-                } else if(!issue) {
-                    _renderIssueSelect( project );
-                }
-            }
-
-            // if issue changed
-            if(changes.ids.indexOf('issue') !== -1) {
-                if (!issue) {
-                    _renderIssueSelect( project );
-                } else {
-                    _renderIssue( issue );
-                }
+            if (!project) {
+                _renderProjectSelect();
+            } else if (!issue) {
+                _renderIssueSelect( project );
+            } else if (issue) {
+                _renderIssue( issue );
             }
         });
 
         $indicator = $( '<div>' );
         StatusBar.addIndicator(STATUS_BAR_ID, $indicator, true, '', Strings.EXTENSION_NAME );
-        _renderProjectSelect();
     };
 } );

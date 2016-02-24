@@ -20,7 +20,7 @@ define(function (require, exports, module) {
 
         // settings
         SettingsDialog = require( 'modules/SettingsDialog' ),
-        settings = PreferencesManager.getExtensionPrefs( 'samura.bracketsGitlab'),
+        settings = PreferencesManager.getExtensionPrefs( 'samura.bracketsGitlab' ),
 
         // strings
         COMMAND_ID_SETTINGS = 'samura.brackets-gitlab.settings'
@@ -44,10 +44,7 @@ define(function (require, exports, module) {
     ExtensionUtils.loadStyleSheet(module, 'styles/style.css');
 
     // start gitlab
-    Gitlab.init( {
-        apiUrl: settings.get( 'apiUrl' ),
-        privateKey: settings.get( 'privateKey' )
-    });
+    Gitlab.init( settings );
 
     StatusBar.init( settings );
     Panel.init();

@@ -18,10 +18,14 @@ define(function (require, exports, module) {
 
         preferences = prefs;
 
+        var auth = {
+            apiUrl: preferences.get( 'apiUrl' ),
+            privateKey: preferences.get( 'privateKey' )
+        };
+
         gitlabDomain
-            .exec("connect", preferences)
-        // get the list of projects
-            .done(exports.projects)
+            .exec("connect", auth)
+            .done()
             .fail(_error);
     };
 
@@ -30,6 +34,7 @@ define(function (require, exports, module) {
      * @param {function} callback
      */
     exports.projects = function( callback ) {
+        console.log('get projects');
         gitlabDomain.exec("projectsList")
             .done(callback)
             .fail(_error);
@@ -41,9 +46,17 @@ define(function (require, exports, module) {
      * @param {function} callback
      */
     exports.project = function( id, callback ) {
+        console.log('get project');
         gitlabDomain.exec("projectGet", id)
             .done(callback)
             .fail(_error);
+    };
+
+    exports.getProjectAndSave = function( id ){
+        exports.project(id, function(project) {
+            preferences.set('project', project, { location: { scope: 'project' } });
+            preferences.save();
+        });
     };
 
     /**
@@ -52,10 +65,11 @@ define(function (require, exports, module) {
      * @param {function} callback
      */
     exports.issues = function( id, callback ) {
+        console.log('get issues');
         gitlabDomain.exec("issuesList", id)
             .done(callback)
             .fail(_error);
-    }
+    };
 
     /**
      * Get the full issue information
@@ -63,10 +77,22 @@ define(function (require, exports, module) {
      * @param {function} callback
      */
     exports.issue = function( projectId, issueId,  callback ) {
+        console.log('get issue');
         gitlabDomain.exec("issueGet", projectId, issueId)
             .done(callback)
             .fail(_error);
-    }
+    };
+
+
+    exports.getIssueAndSave = function (projectId, issueId) {
+        // get the updated information on the project
+        exports.issue( projectId, issueId, function( issue ){
+
+            console.log(preferences);
+            preferences.set('issue', issue, { location: { scope: 'project' } });
+            preferences.save();
+        } );
+    };
 
     EventDispatcher.makeEventDispatcher(this);
 });
