@@ -7,10 +7,12 @@ define(function (require, exports, module) {
 
     var CommandManager = brackets.getModule("command/CommandManager"),
         PreferencesManager = brackets.getModule( 'preferences/PreferencesManager' ),
+        ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
 
         Strings = require( 'modules/Strings' ),
         Gitlab = require( 'modules/Gitlab' ),
         StatusBar = require( 'modules/StatusBar' ),
+        Panel = require( 'modules/Panel' ),
 
         // menu
         Menus = brackets.getModule("command/Menus"),
@@ -21,7 +23,7 @@ define(function (require, exports, module) {
         settings = PreferencesManager.getExtensionPrefs( 'samura.bracketsGitlab'),
 
         // strings
-        COMMAND_ID_SETTINGS = 'samura.bracketsGitlab.settings'
+        COMMAND_ID_SETTINGS = 'samura.brackets-gitlab.settings'
     ;
 
     // Register extension.
@@ -39,6 +41,8 @@ define(function (require, exports, module) {
         SettingsDialog.show( settings );
     }
 
+    ExtensionUtils.loadStyleSheet(module, 'styles/style.css');
+
     // start gitlab
     Gitlab.init( {
         apiUrl: settings.get( 'apiUrl' ),
@@ -46,4 +50,5 @@ define(function (require, exports, module) {
     });
 
     StatusBar.init( settings );
+    Panel.init();
 });
