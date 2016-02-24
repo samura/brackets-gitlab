@@ -10,6 +10,7 @@ define( {
 	// SETTINGS DIALOG
 	SETTINGS_DIALOG_TITLE: 'Gitlab Configuration',
     GITLAB_ERROR: 'There was a problem connection with Gitlab',
+    BRACKETS_GITLAB_ERROR: '"Brackets Gitlab encountered an error\u2026",',
 
     // STATUS BAR
     SELECT_PROJECT: 'Select a Gitlab Project',

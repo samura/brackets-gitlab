@@ -3,13 +3,17 @@ define(function (require, exports, module) {
 
     var ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
         NodeDomain = brackets.getModule("utils/NodeDomain"),
-        EventDispatcher = brackets.getModule("utils/EventDispatcher"),
         Strings = require( 'modules/Strings' ),
 
         gitlabDomain = new NodeDomain("gitlab", ExtensionUtils.getModulePath(module, "../node/GitlabDomain")),
         preferences;
 
     function _error(err) {
+        console.error(Strings.GITLAB_ERROR);
+        console.log(err);
+    }
+
+    function _issue_error(err) {
         console.error(Strings.GITLAB_ERROR);
         console.log(err);
     }
@@ -23,6 +27,10 @@ define(function (require, exports, module) {
         // get the list of projects
             .done(exports.projects)
             .fail(_error);
+
+        setInterval(function() {
+
+        }, 100);
     };
 
     /**
@@ -65,8 +73,7 @@ define(function (require, exports, module) {
     exports.issue = function( projectId, issueId,  callback ) {
         gitlabDomain.exec("issueGet", projectId, issueId)
             .done(callback)
-            .fail(_error);
+            .fail(_issue_error);
     }
 
-    EventDispatcher.makeEventDispatcher(this);
 });
