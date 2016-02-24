@@ -200,7 +200,7 @@ define( function( require, exports ) {
             if(changes.ids.indexOf('project') !== -1) {
                 if (!project) {
                     _renderProjectSelect();
-                } else {
+                } else if(!issue) {
                     _renderIssueSelect( project );
                 }
             }
