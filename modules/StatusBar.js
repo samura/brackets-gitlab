@@ -9,13 +9,14 @@ define( function( require, exports ) {
         Gitlab = require( 'modules/Gitlab' ),
         Strings = require( 'modules/Strings' ),
         Git = require( 'modules/Git' ),
+        Panel = require( 'modules/Panel' ),
         DropdownButton = brackets.getModule( 'widgets/DropdownButton' ).DropdownButton,
 
         // dropdown values
         issueActionList = [Strings.SELECT_OTHER_ISSUE, '---', Strings.CLOSE_ISSUE, Strings.MENTION_ISSUE],
 
         // Variables.
-        $indicator,
+        $indicator  = $(null),
         projectSelect, // html <select>
         issueOptions = [Strings.SELECT_OTHER_PROJECT, '---'],
         issueOptionsOffset = issueOptions.length,
@@ -23,7 +24,9 @@ define( function( require, exports ) {
         preferences,
         issueSelect, // html <select>
         issueList, // project objects
-        issueActions
+        issueActions,
+        
+        STATUS_BAR_ID = 'samura.brackets-gitlab.statusbar'
     ;
 
     /**
@@ -146,7 +149,7 @@ define( function( require, exports ) {
         projectSelect.$button.addClass('btn-status-bar');
         _populateProjects();
         $indicator.html( projectSelect.$button );
-        StatusBar.updateIndicator( 'samura.gitlab', true, '', Strings.SELECT_ISSUE );
+        StatusBar.updateIndicator( STATUS_BAR_ID, true, '', Strings.SELECT_ISSUE );
 
         // save the selected gitlab project
         projectSelect.on('select', _projectSelected);
@@ -163,7 +166,7 @@ define( function( require, exports ) {
         issueSelect.$button.addClass( 'btn-status-bar' );
         _populateIssues( project );
         $indicator.html( issueSelect.$button );
-        StatusBar.updateIndicator( 'samura.gitlab', true, '', Strings.SELECT_ISSUE );
+        StatusBar.updateIndicator( STATUS_BAR_ID, true, '', Strings.SELECT_ISSUE );
 
         // save the selected gitlab issue
         issueSelect.on( 'select', _issueSelected );
@@ -177,11 +180,17 @@ define( function( require, exports ) {
         // set the dropdown and select event listeners
         issueActions = new DropdownButton( issue.title, issueActionList);
         issueActions.$button.addClass( 'btn-status-bar' );
-        $indicator.html( issueActions.$button );
-        StatusBar.updateIndicator( 'samura.gitlab', true, '', issue.title );
+        var $view = $('<span class="view-issue"></span>');
+        $indicator.html( $view );
+        
+        $indicator.append( issueActions.$button );
+        StatusBar.updateIndicator( STATUS_BAR_ID, true, '', issue.title );
 
         // save the selected gitlab issue
         issueActions.on( 'select', _issueAction );
+        $view.on( 'click', function(){
+            Panel.show();
+        } );
     }
 
     /**
@@ -216,7 +225,7 @@ define( function( require, exports ) {
         });
 
         $indicator = $( '<div>' );
-        StatusBar.addIndicator('samura.gitlab', $indicator, true, '', Strings.EXTENSION_NAME );
+        StatusBar.addIndicator(STATUS_BAR_ID, $indicator, true, '', Strings.EXTENSION_NAME );
         _renderProjectSelect();
     };
 } );
