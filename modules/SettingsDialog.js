@@ -9,7 +9,7 @@ define( function( require, exports ) {
         Strings = require( 'modules/Strings' ),
 
         // Templates.
-        settingsDialogTemplate = require( 'text!../html/settings-dialog.html' ),
+        settingsDialogTemplate = require( 'text!html/settings-dialog.html' ),
 
 
         // Variables.
