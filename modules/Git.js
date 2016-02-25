@@ -51,7 +51,7 @@ define( function( require, exports ) {
         // set the commit message
         message = Strings
             .COMMIT_MESSAGE_CLOSE
-            .replace('#ID#', issue.id)
+            .replace('#ID#', issue.iid)
             .replace('#TITLE#', issue.title);
 
         _doCommit( message );
