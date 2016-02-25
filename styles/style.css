@@ -24,7 +24,7 @@
     background-color: white;
 }
 #gitlab-panel .issue-content {
-    padding-right: 25%;
+    padding-right: 30%;
     position: relative;
     height: 100%;
 }
@@ -39,10 +39,22 @@
 #gitlab-panel .issue h2 {
     margin-top: 0;
 }
-#gitlab-panel .comments {
+
+#gitlab-panel .notes {
     border-left: 1px solid #cdcdcd;
-    width: 25%;
+    width: 30%;
     position: absolute;
     right: 0px;
     top: 0px;
+}
+#gitlab-panel .note {
+    border-bottom: 1px solid #cdcdcd;
+    margin-bottom: 10px;
+}
+#gitlab-panel .notes .author {
+    font-weight: 500;
+}
+#gitlab-panel .notes .created:before {
+    content: "\00b7";
+    padding: 5px;
 }

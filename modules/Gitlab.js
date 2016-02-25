@@ -92,13 +92,28 @@ define(function (require, exports, module) {
     };
 
 
-    exports.getIssueAndSave = function (projectId, issueId) {
+    exports.getIssueAndSave = function (projectId, issueId, callback) {
         // get the updated information on the project
         exports.issue( projectId, issueId, function( issue ){
 
             console.log(preferences);
             preferences.set('issue', issue, { location: { scope: 'project' } });
             preferences.save();
+            if (typeof callback === 'function') {
+                callback();
+            }
         } );
+    };
+
+    /**
+     * Get the notes list of the selected issue
+     * @param {number} id Project ID
+     * @param {function} callback
+     */
+    exports.notes = function( projectId, issueId, callback ) {
+        console.log('get notes');
+        gitlabDomain.exec("notesList", projectId, issueId)
+            .done(callback)
+            .fail(_error);
     };
 });

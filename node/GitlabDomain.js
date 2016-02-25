@@ -31,6 +31,15 @@
         }, callback);
     }
 
+    function _notesList ( id, issueId, callback ) {
+
+        gitlabClient.issues.listNotes({
+            id: id,
+            issue_id: issueId,
+            per_page: 100
+        }, callback);
+    }
+
     function _projectGet ( id, callback ) {
 
         gitlabClient.projects.get({ id: id }, callback);
@@ -133,6 +142,23 @@
             [{name: 'issues',
               type: 'array',
               description: 'Full issue information'}]
+        );
+
+        domainManager.registerCommand(
+            "gitlab",
+            "notesList",
+            _notesList,
+            true,
+            "Returns a list of notes of the specified issue",
+            [{id: 'id',
+              type: 'integer',
+              description: 'A project ID'},
+             {id: 'issueId',
+              type: 'integer',
+              description: 'An issue ID'}],
+            [{name: 'issues',
+              type: 'array',
+              description: 'A list of notes'}]
         );
     }
 
