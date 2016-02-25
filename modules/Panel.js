@@ -6,6 +6,7 @@ define(function (require, exports) {
     var WorkspaceManager = brackets.getModule("view/WorkspaceManager"),
         Strings = require( 'modules/Strings' ),
         Resizer = brackets.getModule("utils/Resizer"),
+        marked = require("lib/marked"),
 
         gitPanelTemplate = require("text!html/panel.html"),
         gitPanelIssueTemplate = require("text!html/panel-issue.html"),
@@ -57,7 +58,7 @@ define(function (require, exports) {
                 // render the left side of the panel - issue information
                 var panelIssueHtml = Mustache.render(gitPanelIssueTemplate, {
                     title: issue.title,
-                    description: issue.description.replace(/\n/g, '<br />')
+                    description: marked(issue.description)
                 });
                 
                 $gitPanel.find('.issue').html(panelIssueHtml);
