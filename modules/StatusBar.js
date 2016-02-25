@@ -29,22 +29,6 @@ define( function( require, exports ) {
     ;
 
     /**
-     * Clear the issue you were working on
-     */
-    function _clearIssue() {
-        preferences.set( 'issue', undefined, { location: { scope: 'project' } });
-        preferences.save();
-    }
-
-    /**
-     * Clear the project you were working on
-     */
-    function _clearProject() {
-        preferences.set( 'project', undefined, { location: { scope: 'project' } });
-        preferences.save();
-    }
-
-    /**
      * populate the select box with projects
      */
     function _populateProjects() {
@@ -88,7 +72,7 @@ define( function( require, exports ) {
      */
     function _projectSelected(select, label, index) {
         Gitlab.getProjectAndSave( projectList[index].id );
-        _clearIssue();
+        Gitlab.clearIssue();
     }
 
     /**
@@ -100,7 +84,7 @@ define( function( require, exports ) {
     function _issueSelected(select, label, index) {
 
         if(label === Strings.SELECT_OTHER_PROJECT) {
-            _clearProject();
+            Gitlab.clearProject();
             return;
         }
 
@@ -123,7 +107,7 @@ define( function( require, exports ) {
                 Git.mentionIssue( preferences.get( 'issue' ) );
                 break;
             case Strings.SELECT_OTHER_ISSUE: // select another
-                _clearIssue();
+                Gitlab.clearIssue();
                 break;
         }
     }

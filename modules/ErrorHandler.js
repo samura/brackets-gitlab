@@ -4,12 +4,11 @@ define(function (require, exports) {
     var Dialogs                    = brackets.getModule('widgets/Dialogs'),
         Strings                    = require('modules/Strings'),
         Utils                      = require('modules/Utils'),
-        errorDialogTemplate        = require('text!html/error-dialog.html');
+        errorDialogTemplate        = require('text!html/error-dialog.html'),
+        showing = {
+            error: false
+        };
 
-
-        Gitlab = require( 'modules/Gitlab' ),
-        Strings = require( 'modules/Strings' ),
-        Git = require( 'modules/Git' ),
 
     function _errorToString(err) {
         var body;
@@ -40,11 +39,19 @@ define(function (require, exports) {
         var dialog,
             body;
 
-        // Default code
-//        if(typeof callback === 'undefined') {
-//            callback = function (buttonId) {
-//            }
-//        }
+        // Default callback
+        if(typeof callback !== 'function') {
+            callback = function (buttonId) {};
+        }
+
+//        showing.error = true;
+        if(showing.error) {
+            if(typeof callback === 'function') {
+                callback();
+            }
+            return;
+        }
+        showing.error = true;
 
         body = _errorToString(err);
 
@@ -56,7 +63,13 @@ define(function (require, exports) {
 
         dialog = Dialogs.showModalDialogUsingTemplate(compiledTemplate);
 
-        dialog.done(callback);
+        dialog.done(function (buttonId) {
+            showing.error = false;
+
+            if(typeof callback === 'function') {
+                callback(buttonId);
+            }
+        });
     };
 
 });

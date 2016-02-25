@@ -6,6 +6,7 @@ define( {
 	OK:     "OK",
 	CANCEL: "Cancel",
 	RESET:  "Reset",
+    CLOSE:  "Close",
 
 	// SETTINGS DIALOG
 	SETTINGS_DIALOG_TITLE: 'Gitlab Configuration',
@@ -26,5 +27,10 @@ define( {
     // PANEL
     OPEN_ON_GITLAB: 'Open Issue on Gitlab',
     REFRESH_ISSUE: 'Refresh Issue',
+
+    //ERROR DIALOG
+    ISSUE_ERROR: 'There was a problem fetching the issue',
+    PROJECT_ERROR: 'There was a problem fetching the project',
+    CLOSED_ISSUE_ERROR: 'The issue is already closed'
     
 } );
