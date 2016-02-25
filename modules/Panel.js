@@ -47,10 +47,13 @@ define(function (require, exports) {
      * Render the issue and notes
      */
     function _renderIssueAndNotes () {
+        var project = preferences.get( 'project' );
         var issue = preferences.get( 'issue' );
 
         if( issue ) {
 
+            $gitPanel.find('#open-on-gitlab').attr('href', project.web_url + '/issues/' + issue.iid);
+            
             // render the left side of the panel - issue information
             var panelIssueHtml = Mustache.render(gitPanelIssueTemplate, {
                 title: issue.title,
@@ -87,7 +90,9 @@ define(function (require, exports) {
         preferences = prefs;
 
         // Add panel
-        var panelHtml = Mustache.render(gitPanelTemplate, {});
+        var panelHtml = Mustache.render(gitPanelTemplate, {
+            Strings: Strings
+        });
         var $panelHtml = $(panelHtml);
 
         gitPanel = WorkspaceManager.createBottomPanel(PANEL_ID, $panelHtml, 100);

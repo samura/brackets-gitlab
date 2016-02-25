@@ -58,3 +58,17 @@
     content: "\00b7";
     padding: 5px;
 }
+
+#gitlab-panel .toolbar .left-icons {
+    width: 50%;
+    float: left;
+}
+#gitlab-panel .toolbar .right-icons {
+    display: flex;
+    justify-content: flex-end;
+    width: 50%;
+    float: left;
+}
+#gitlab-panel .toolbar .right-icons .btn-group {
+    margin-right: 25px;
+}

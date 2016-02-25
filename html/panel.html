@@ -1,7 +1,14 @@
 <div id="gitlab-panel" class="bottom-panel vert-resizable top-resizer" >
     <div class="toolbar simple-toolbar-layout mainToolbar">
-        <div class="btn-group">
-            <button title="Refresh" class="btn small" id="refresh">Refresh Issue</button>
+        <div class="left-icons">
+            <div class="btn-group">
+                <a href="#" class="btn small" id="open-on-gitlab">{{Strings.OPEN_ON_GITLAB}}</a>
+            </div>
+        </div>
+        <div class="right-icons">
+            <div class="btn-group" style="">
+                <button class="btn small" id="refresh">{{Strings.REFRESH_ISSUE}}</button>
+            </div>
         </div>
         <a href="#" class="close" id="close">×</a>
     </div>

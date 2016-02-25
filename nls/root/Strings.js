@@ -21,5 +21,10 @@ define( {
     COMMIT_MESSAGE_MENTION: '##ID# - #TITLE#',
     CLOSE_ISSUE: 'Close this issue',
     MENTION_ISSUE: 'Commit with link to the issue',
-    SELECT_OTHER_ISSUE: 'Work on another issue'
+    SELECT_OTHER_ISSUE: 'Work on another issue',
+    
+    // PANEL
+    OPEN_ON_GITLAB: 'Open Issue on Gitlab',
+    REFRESH_ISSUE: 'Refresh Issue',
+    
 } );
