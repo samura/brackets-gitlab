@@ -8,10 +8,13 @@ define(function (require, exports) {
         Resizer = brackets.getModule("utils/Resizer"),
 
         gitPanelTemplate = require("text!html/panel.html"),
+        gitPanelIssueTemplate = require("text!html/panel-issue.html"),
+
+        PANEL_ID = 'samura.brackets-gitlab.statusbar',
+
         gitPanel = null,
         $gitPanel = $(null),
-        
-        PANEL_ID = 'samura.brackets-gitlab.statusbar'
+        preferences        
     ;
 
     /**
@@ -20,32 +23,50 @@ define(function (require, exports) {
     function _show () {
         Resizer.show($gitPanel);
     };
-    
+
     /**
      * Hide the panel
      */
     function _hide () {
         Resizer.hide($gitPanel);
     };
-    
+
     /**
      * Build the panel
      */
-    exports.init = function () {
-        // Add panel
-        var panelHtml = Mustache.render(gitPanelTemplate, {
-            Strings: Strings
-        });
-        var $panelHtml = $(panelHtml);
+    exports.init = function ( prefs ) {
         
+        preferences = prefs;
+        
+        // Add panel
+        var panelHtml = Mustache.render(gitPanelTemplate, {});
+        var $panelHtml = $(panelHtml);
+
         gitPanel = WorkspaceManager.createBottomPanel(PANEL_ID, $panelHtml, 100);
         $gitPanel = gitPanel.$panel;
-        
+
         $gitPanel.on("click", "#close", function () {
             _hide();
         });
+
+        preferences.on('change', function() {
+            var issue = preferences.get( 'issue' );
+
+            if( issue ) {
+                
+                // render the left side of the panel - issue information
+                var panelIssueHtml = Mustache.render(gitPanelIssueTemplate, {
+                    title: issue.title,
+                    description: issue.description.replace(/\n/g, '<br />')
+                });
+                
+                $gitPanel.find('.issue').html(panelIssueHtml);
+                
+                // render the right side of the panel - comments information
+            }
+        });
     };
-    
+
     /**
      * open the panel
      */

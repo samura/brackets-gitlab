@@ -19,3 +19,30 @@
     word-wrap: normal;
     overflow: scroll;
 }
+
+#gitlab-panel .resizable-content {
+    background-color: white;
+}
+#gitlab-panel .issue-content {
+    padding-right: 25%;
+    position: relative;
+    height: 100%;
+}
+#gitlab-panel .issue-content > div {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 12px;
+    box-sizing: border-box;
+    word-break: break-all;
+}
+#gitlab-panel .issue h2 {
+    margin-top: 0;
+}
+#gitlab-panel .comments {
+    border-left: 1px solid #cdcdcd;
+    width: 25%;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}

@@ -47,5 +47,5 @@ define(function (require, exports, module) {
     Gitlab.init( settings );
 
     StatusBar.init( settings );
-    Panel.init();
+    Panel.init( settings );
 });
