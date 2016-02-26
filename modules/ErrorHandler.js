@@ -3,7 +3,6 @@ define(function (require, exports) {
 
     var Dialogs                    = brackets.getModule('widgets/Dialogs'),
         Strings                    = require('modules/Strings'),
-        Utils                      = require('modules/Utils'),
         errorDialogTemplate        = require('text!html/error-dialog.html'),
         showing = {
             error: false
@@ -15,8 +14,8 @@ define(function (require, exports) {
 
         if (typeof err === 'string') {
             body = err;
-        } else if (err instanceof Error) {
-            body = Utils.encodeSensitiveInformation(err.toString());
+        } else if(err.data && err.data.resBody && err.data.resBody.message) {
+            body = err.data.resBody.message;
         }
 
         if (!body || body === '[object Object]') {
@@ -44,7 +43,6 @@ define(function (require, exports) {
             callback = function (buttonId) {};
         }
 
-//        showing.error = true;
         if(showing.error) {
             if(typeof callback === 'function') {
                 callback();

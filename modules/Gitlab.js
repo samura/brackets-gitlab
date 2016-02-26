@@ -19,6 +19,7 @@ define(function (require, exports, module) {
         console.log(err);
         ErrorHandler.showError(err, Strings.PROJECT_ERROR);
         _clearProject();
+        _clearIssue();
     };
 
     function _issue_error(err) {
@@ -96,12 +97,14 @@ define(function (require, exports, module) {
             privateKey: preferences.get( 'privateKey' )
         };
 
+        var dataUpdateTime = preferences.get( 'dataUpdateTime');
+
         gitlabDomain
             .exec("connect", auth)
             .done()
             .fail(_error);
 
-        setInterval(_update, 15000);
+        setInterval(_update, dataUpdateTime * 60000);
     };
 
     /**

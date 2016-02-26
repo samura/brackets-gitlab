@@ -10,6 +10,7 @@ define(function (require, exports, module) {
         ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
 
         Strings = require( 'modules/Strings' ),
+        Defaults = require( 'modules/Defaults' ),
         Gitlab = require( 'modules/Gitlab' ),
         StatusBar = require( 'modules/StatusBar' ),
         Panel = require( 'modules/Panel' ),
@@ -42,6 +43,9 @@ define(function (require, exports, module) {
     }
 
     ExtensionUtils.loadStyleSheet(module, 'styles/style.css');
+
+    // load defaults
+    Defaults.init( settings );
 
     // start gitlab
     Gitlab.init( settings );

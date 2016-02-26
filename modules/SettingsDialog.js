@@ -5,7 +5,6 @@ define( function( require, exports ) {
     var Dialogs = brackets.getModule( 'widgets/Dialogs' ),
 
         // Extension Modules.
-        Defaults = require( 'modules/Defaults' ),
         Strings = require( 'modules/Strings' ),
 
         // Templates.
@@ -23,7 +22,8 @@ define( function( require, exports ) {
     function getValues() {
         var values = {
             apiUrl: getvalue( 'apiUrl' ),
-            privateKey: getvalue( 'privateKey' )
+            privateKey: getvalue( 'privateKey' ),
+            dataUpdateTime: getvalue( 'dataUpdateTime' )
         };
 
         return values;
@@ -43,6 +43,7 @@ define( function( require, exports ) {
     function setValues( values ) {
         setValue( 'apiUrl', values.apiUrl );
         setValue( 'privateKey', values.privateKey );
+        setValue( 'dataUpdateTime', values.dataUpdateTime );
     }
 
     /**
@@ -59,7 +60,8 @@ define( function( require, exports ) {
     function init() {
         var values = {
             apiUrl: preferences.get( 'apiUrl' ),
-            privateKey: preferences.get( 'privateKey' )
+            privateKey: preferences.get( 'privateKey' ),
+            dataUpdateTime: preferences.get( 'dataUpdateTime')
         };
 
         setValues( values );
@@ -92,6 +94,7 @@ define( function( require, exports ) {
 
                 preferences.set( 'apiUrl', values.apiUrl );
                 preferences.set( 'privateKey', values.privateKey );
+                preferences.set( 'dataUpdateTime', values.dataUpdateTime );
                 preferences.save();
             }
         } );

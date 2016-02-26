@@ -1,7 +1,7 @@
-define( function() {
-	'use strict';
+define( function (require, exports, module) {
+    'use strict';
 
-	return {
-        // empty for now
-	};
+    exports.init = function (prefs) {
+        prefs.definePreference("dataUpdateTime", "int", 30);
+    }
 } );
