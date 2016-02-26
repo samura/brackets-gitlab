@@ -1,5 +1,3 @@
-/*jshint maxstatements:false*/
-
 define(function (require, exports) {
     "use strict";
 
@@ -106,7 +104,7 @@ define(function (require, exports) {
             _disableBtn( $gitPanel.find('#refresh') );
             Gitlab.getIssueAndSave( issue.project_id, issue.id, function(){
                 _renderIssueAndNotes();
-            })
+            });
         });
 
         preferences.on('change', _renderIssueAndNotes);

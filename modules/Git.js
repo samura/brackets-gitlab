@@ -1,14 +1,24 @@
 define( function( require, exports ) {
     'use strict';
 
-    var Strings = require( 'modules/Strings' );
+    var Strings = require( 'modules/Strings' ),
+        ErrorHandler = require( 'modules/ErrorHandler' ),
+        preferences;
 
     function _doCommit ( message ) {
         // open the panel
         $('#git-toolbar-icon:not(.on)').click();
 
-        // select all files
-        if(!$('.check-all.git-available').prop('checked')) {
+        var stageAll = preferences.get ( 'stageAll' );
+
+        if(!stageAll && !$('.git-edited-list input[type=checkbox]:checked').length) {
+            ErrorHandler.showError(Strings.NO_FILES_TO_COMMIT);
+            return;
+        }
+
+        // select all files if stage all is checked on settings
+
+        if(stageAll && !$('.check-all.git-available').prop('checked')) {
             $('.check-all.git-available').click();
         }
 
@@ -60,7 +70,7 @@ define( function( require, exports ) {
     /**
      * Commit the modified files with a message mentioning the issue #
      */
-    exports.mentionIssue = function ( issue) {
+    exports.mentionIssue = function ( issue ) {
 
         // had to do this on another line because it was not indenting right
         var message;
@@ -71,11 +81,14 @@ define( function( require, exports ) {
             .replace('#TITLE#', issue.title);
 
         _doCommit( message );
-    }
+    };
 
     /**
-	 * Exposed method to init
-	 */
-    exports.init = function( prefs ) {
+     * import preferentes
+     * @param {object} prefs preferences
+     */
+    exports.init = function ( prefs ) {
+
+        preferences = prefs;
     };
 } );

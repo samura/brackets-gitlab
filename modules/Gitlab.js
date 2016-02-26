@@ -12,7 +12,7 @@ define(function (require, exports, module) {
     function _error(err) {
         console.error(Strings.GITLAB_ERROR);
         console.log(err);
-    };
+    }
 
     function _project_error(err) {
         console.error(Strings.GITLAB_ERROR);
@@ -20,40 +20,38 @@ define(function (require, exports, module) {
         ErrorHandler.showError(err, Strings.PROJECT_ERROR);
         _clearProject();
         _clearIssue();
-    };
+    }
 
     function _issue_error(err) {
-        console.error(Strings.GITLAB_ERROR);
-        console.log(err);
         ErrorHandler.showError(err, Strings.ISSUE_ERROR);
         _clearIssue();
-    };
+    }
 
     function _clearProject() {
         preferences.set( 'project', undefined, { location: { scope: 'project' } });
         preferences.save();
-    };
+    }
 
     function _getProjects( callback ) {
         console.log('get projects');
         gitlabDomain.exec("projectsList")
             .done(callback)
             .fail(_error);
-    };
+    }
 
     function _getProject( id, callback) {
         console.log('get project');
         gitlabDomain.exec("projectGet", id)
             .done(callback)
             .fail(_project_error);
-    };
+    }
 
     function _getIssues( id, callback ) {
         console.log('get issues');
         gitlabDomain.exec("issuesList", id)
             .done(callback)
             .fail(_error);
-    };
+    }
 
     function _getIssue( projectId, issueId,  callback) {
         console.log('get issue');
@@ -65,15 +63,14 @@ define(function (require, exports, module) {
                 _issue_error(Strings.CLOSED_ISSUE_ERROR);
             }
         }).fail(_issue_error);
-    };
+    }
 
     function _clearIssue() {
         preferences.set( 'issue', undefined, { location: { scope: 'project' } });
         preferences.save();
-    };
+    }
 
     function _update() {
-        //TODO use async
         var project = preferences.get( 'project' );
         var issue = preferences.get( 'issue' );
 
@@ -84,12 +81,10 @@ define(function (require, exports, module) {
                 }
             });
         }
-
-    };
+    }
 
     /** Exports **/
-
-    exports.init  = function(prefs) {
+    exports.init = function(prefs) {
         preferences = prefs;
 
         var auth = {

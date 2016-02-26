@@ -21,18 +21,19 @@ define( function( require, exports ) {
 	 */
     function getValues() {
         var values = {
-            apiUrl: getvalue( 'apiUrl' ),
-            privateKey: getvalue( 'privateKey' ),
-            dataUpdateTime: getvalue( 'dataUpdateTime' )
+            apiUrl: getValue( 'apiUrl' ),
+            privateKey: getValue( 'privateKey' ),
+            dataUpdateTime: getValue( 'dataUpdateTime' ),
+            stageAll: $dialog.find( '#stageAll' ).prop( 'checked' )
         };
 
         return values;
     }
 
     /**
-	 * Get value
+	 * Get value for inputs
 	 */
-    function getvalue( name ) {
+    function getValue( name ) {
         // Return values of checked checkboxes.
         return $( '#'+name, $dialog ).val();
     }
@@ -44,6 +45,7 @@ define( function( require, exports ) {
         setValue( 'apiUrl', values.apiUrl );
         setValue( 'privateKey', values.privateKey );
         setValue( 'dataUpdateTime', values.dataUpdateTime );
+        $dialog.find( '#stageAll' ).prop( 'checked', values.stageAll );
     }
 
     /**
@@ -61,7 +63,8 @@ define( function( require, exports ) {
         var values = {
             apiUrl: preferences.get( 'apiUrl' ),
             privateKey: preferences.get( 'privateKey' ),
-            dataUpdateTime: preferences.get( 'dataUpdateTime')
+            dataUpdateTime: preferences.get( 'dataUpdateTime'),
+            stageAll: preferences.get( 'stageAll')
         };
 
         setValues( values );
@@ -92,9 +95,12 @@ define( function( require, exports ) {
             if ( buttonId === 'ok' ) {
                 values = getValues();
 
+                console.log(values);
+
                 preferences.set( 'apiUrl', values.apiUrl );
                 preferences.set( 'privateKey', values.privateKey );
                 preferences.set( 'dataUpdateTime', values.dataUpdateTime );
+                preferences.set( 'stageAll', values.stageAll );
                 preferences.save();
             }
         } );

@@ -11,7 +11,7 @@ define( {
 	// SETTINGS DIALOG
 	SETTINGS_DIALOG_TITLE: 'Gitlab Configuration',
     GITLAB_ERROR: 'There was a problem connection with Gitlab',
-    BRACKETS_GITLAB_ERROR: '"Brackets Gitlab encountered an error\u2026",',
+    BRACKETS_GITLAB_ERROR: 'Brackets Gitlab encountered an error\u2026',
 
     // STATUS BAR
     SELECT_PROJECT: 'Select a Gitlab Project',
@@ -31,6 +31,6 @@ define( {
     //ERROR DIALOG
     ISSUE_ERROR: 'There was a problem fetching the issue',
     PROJECT_ERROR: 'There was a problem fetching the project',
-    CLOSED_ISSUE_ERROR: 'The issue is already closed'
-    
+    CLOSED_ISSUE_ERROR: 'The issue is already closed',
+    NO_FILES_TO_COMMIT: 'There are no selected files to commit.'
 } );

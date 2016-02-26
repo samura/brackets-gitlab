@@ -12,6 +12,7 @@ define(function (require, exports, module) {
         Strings = require( 'modules/Strings' ),
         Defaults = require( 'modules/Defaults' ),
         Gitlab = require( 'modules/Gitlab' ),
+        Git = require( 'modules/Git' ),
         StatusBar = require( 'modules/StatusBar' ),
         Panel = require( 'modules/Panel' ),
 
@@ -49,6 +50,7 @@ define(function (require, exports, module) {
 
     // start gitlab
     Gitlab.init( settings );
+    Git.init( settings );
 
     StatusBar.init( settings );
     Panel.init( settings );

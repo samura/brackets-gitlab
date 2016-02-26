@@ -1,34 +1,37 @@
 <div class="modal">
-	<div class="modal-header">
-		<h1 class="dialog-title">{{ Strings.SETTINGS_DIALOG_TITLE }}</h1>
-	</div>
+    <div class="modal-header">
+        <h1 class="dialog-title">{{ Strings.SETTINGS_DIALOG_TITLE }}</h1>
+    </div>
 
-	<div class="modal-body tab-content">
+    <div class="modal-body tab-content">
 
-		<fieldset class="tool tool-phpcs">
-			<legend>Enter your API credentials</legend>
+        <fieldset class="tool tool-phpcs">
+            <legend>Enter your API credentials</legend>
 
-			<p class="columns">
+            <p class="columns">
                 <label for="apiUrl">Api URL:</label>
-				<input type="link" id="apiUrl" name="apiUrl" placeholder="http://">
-			</p>
+                <input type="link" id="apiUrl" name="apiUrl" placeholder="http://">
+            </p>
 
-			<p class="columns">
+            <p class="columns">
                 <label for="privateKey">Private Key:</label>
-				<input type="text" id="privateKey" name="privateKey" placeholder="">
-			</p>
+                <input type="text" id="privateKey" name="privateKey" placeholder="">
+            </p>
 
-			<legend>Preferences</legend>
+            <legend>Preferences</legend>
 
-			<p class="columns">
+            <p class="columns">
                 <label for="dataUpdateTime">Update data interval (minutes):</label>
-				<input type="link" id="dataUpdateTime" name="dataUpdateTime" placeholder="15">
-			</p>
-		</fieldset>
-	</div>
+                <input type="link" id="dataUpdateTime" name="dataUpdateTime" placeholder="15">
+            </p>
+            <p>
+                <input type="checkbox" name="stageAll" id="stageAll" value="1">Stage all modified files on commit?
+            </p>
+        </fieldset>
+    </div>
 
-	<div class="modal-footer">
-		<button data-button-id="ok" class="dialog-button btn primary">{{ Strings.OK }}</button>
-		<button data-button-id="cancel" class="dialog-button btn">{{ Strings.CANCEL }}</button>
-	</div>
+    <div class="modal-footer">
+        <button data-button-id="ok" class="dialog-button btn primary">{{ Strings.OK }}</button>
+        <button data-button-id="cancel" class="dialog-button btn">{{ Strings.CANCEL }}</button>
+    </div>
 </div>

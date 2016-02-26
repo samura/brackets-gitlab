@@ -34,14 +34,9 @@ define(function (require, exports) {
         return err.toString().toLowerCase().indexOf(what.toLowerCase()) !== -1;
     };
 
-    exports.showError = function (err, title, callback) {
+    exports.showError = function (title, err, callback) {
         var dialog,
             body;
-
-        // Default callback
-        if(typeof callback !== 'function') {
-            callback = function (buttonId) {};
-        }
 
         if(showing.error) {
             if(typeof callback === 'function') {
@@ -51,7 +46,12 @@ define(function (require, exports) {
         }
         showing.error = true;
 
-        body = _errorToString(err);
+        // make sure we have an error
+        if(typeof err === 'undefined' || !err) {
+            body = '';
+        } else {
+            body = _errorToString(err);
+        }
 
         var compiledTemplate = Mustache.render(errorDialogTemplate, {
             title: title,
