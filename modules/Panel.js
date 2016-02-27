@@ -20,7 +20,9 @@ define(function (require, exports) {
         project,
         issue,
         panelVisibility,
-        preferences
+        dataUpdateTime,
+        preferences,
+        renderUpdate
     ;
 
     /**
@@ -111,6 +113,7 @@ define(function (require, exports) {
 
         preferences = prefs;
         panelVisibility = preferences.get( 'openPanel' );
+        dataUpdateTime = preferences.get( 'dataUpdateTime' );
 
         // Add panel
         var panelHtml = Mustache.render(gitPanelTemplate, {
@@ -141,6 +144,13 @@ define(function (require, exports) {
 
             project = preferences.get( 'project' );
             issue = preferences.get( 'issue' );
+            dataUpdateTime = preferences.get( 'dataUpdateTime' );
+
+            // set the update interval
+            if(typeof renderUpdate !== 'undefined') {
+                clearInterval(renderUpdate);
+            }
+            renderUpdate = setInterval(_renderIssueAndNotes, dataUpdateTime * 60000);
 
             // only update if there's a change on the isse or the openPanel
             if( changes.ids.indexOf('issue') === -1 &&
