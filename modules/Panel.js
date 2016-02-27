@@ -7,6 +7,7 @@ define(function (require, exports) {
         Gitlab = require( 'modules/Gitlab' ),
         Git = require( 'modules/Git' ),
         marked = require("lib/marked"),
+        timeago = require("lib/timeago"),
 
         gitPanelTemplate = require("text!html/panel.html"),
         gitPanelIssueTemplate = require("text!html/panel-issue.html"),
@@ -96,8 +97,7 @@ define(function (require, exports) {
                         return marked(this.body);
                     },
                     formatDate: function() {
-                        var date = new Date(Date.parse(this.created_at));
-                        return date.toLocaleString();
+                        return timeago(Date.parse(this.created_at));
                     }
                 });
 
