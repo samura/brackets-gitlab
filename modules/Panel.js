@@ -16,7 +16,9 @@ define(function (require, exports) {
 
         gitPanel = null,
         $gitPanel = $(null),
-        preferences        
+        project,
+        issue,
+        preferences
     ;
 
     /**
@@ -45,13 +47,11 @@ define(function (require, exports) {
      * Render the issue and notes
      */
     function _renderIssueAndNotes () {
-        var project = preferences.get( 'project' );
-        var issue = preferences.get( 'issue' );
 
         if( issue ) {
 
             $gitPanel.find('#open-on-gitlab').attr('href', project.web_url + '/issues/' + issue.iid);
-            
+
             // render the left side of the panel - issue information
             var panelIssueHtml = Mustache.render(gitPanelIssueTemplate, {
                 title: issue.title,
@@ -62,9 +62,18 @@ define(function (require, exports) {
 
             // render the right side of the panel - notes information
             Gitlab.notes( issue.project_id, issue.id, function( notes ) {
+
+                function compare(a,b) {
+                    var c = new Date(Date.parse(a.created_at)),
+                        d = new Date(Date.parse(b.created_at));
+
+                    return (c.getTime() < d.getTime()) ? 1 : -1;
+                }
+                notes.sort(compare);
+
                 // render the left side of the panel - issue information
                 var panelNotesHtml = Mustache.render(gitPanelNotesTemplate, {
-                    notes: notes.reverse(),
+                    notes: notes,
                     renderNote: function() {
                         return marked(this.body);
                     },
@@ -98,8 +107,7 @@ define(function (require, exports) {
 
         $gitPanel.on("click", "#close", _hide);
         $gitPanel.on("click", "#refresh", function() {
-            var issue = preferences.get( 'issue' );
-            
+
             $gitPanel.find('.issue,.notes').html('loading...');
             _disableBtn( $gitPanel.find('#refresh') );
             Gitlab.getIssueAndSave( issue.project_id, issue.id, function(){
@@ -107,7 +115,12 @@ define(function (require, exports) {
             });
         });
 
-        preferences.on('change', _renderIssueAndNotes);
+        preferences.on('change', function() {
+            project = preferences.get( 'project' );
+            issue = preferences.get( 'issue' );
+
+            _renderIssueAndNotes();
+        });
     };
 
     exports.show = _show;

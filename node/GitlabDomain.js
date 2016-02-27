@@ -31,8 +31,7 @@
 
         gitlabClient.issues.listNotes({
             id: id,
-            issue_id: issueId,
-            per_page: 100
+            issue_id: issueId
         }, callback);
     }
 
