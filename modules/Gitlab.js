@@ -16,8 +16,6 @@ define(function (require, exports, module) {
     }
 
     function _project_error(err) {
-        console.error(Strings.GITLAB_ERROR);
-        console.log(err);
         ErrorHandler.showError(err, Strings.PROJECT_ERROR);
         _clearProject();
         _clearIssue();
@@ -160,7 +158,6 @@ define(function (require, exports, module) {
     exports.getIssueAndSave = function (projectId, issueId, callback) {
         // get the updated information on the project
         _getIssue( projectId, issueId, function( issue ){
-            console.log(preferences);
             preferences.set('issue', issue, { location: { scope: 'project' } });
             preferences.save();
             if (typeof callback === 'function') {

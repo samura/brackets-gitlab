@@ -18,7 +18,7 @@ define(function (require, exports) {
         $gitPanel = $(null),
         project,
         issue,
-        panel,
+        panelVisibility,
         preferences
     ;
 
@@ -26,7 +26,7 @@ define(function (require, exports) {
      * Show the panel
      */
     function _toggle () {
-        if( !panel ) {
+        if( !panelVisibility ) {
             _show();
         } else {
             _hide();
@@ -37,7 +37,7 @@ define(function (require, exports) {
      * Show the panel
      */
     function _show () {
-        panel = true;
+        panelVisibility = true;
         preferences.set( 'openPanel', true );
         preferences.save();
         Resizer.show($gitPanel);
@@ -47,7 +47,7 @@ define(function (require, exports) {
      * Hide the panel
      */
     function _hide () {
-        panel = false;
+        panelVisibility = false;
         preferences.set( 'openPanel', false );
         preferences.save();
         Resizer.hide($gitPanel);
@@ -113,7 +113,7 @@ define(function (require, exports) {
     exports.init = function ( prefs ) {
 
         preferences = prefs;
-        panel = preferences.get( 'openPanel' );
+        panelVisibility = preferences.get( 'openPanel' );
 
         // Add panel
         var panelHtml = Mustache.render(gitPanelTemplate, {
@@ -125,7 +125,7 @@ define(function (require, exports) {
         $gitPanel = gitPanel.$panel;
 
         // set same state as it was on last brackets start
-        if( panel ) {
+        if( panelVisibility ) {
             _show();
         }
 
@@ -149,7 +149,10 @@ define(function (require, exports) {
             project = preferences.get( 'project' );
             issue = preferences.get( 'issue' );
 
-            _renderIssueAndNotes();
+            // only refresh information if panel is visible
+            if( panelVisibility ) {
+                _renderIssueAndNotes();
+            }
         });
     };
 
