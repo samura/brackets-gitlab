@@ -3,9 +3,9 @@ define(function (require, exports) {
 
     var WorkspaceManager = brackets.getModule("view/WorkspaceManager"),
         Strings = require( 'modules/Strings' ),
+        Resizer = brackets.getModule("utils/Resizer"),
         Gitlab = require( 'modules/Gitlab' ),
         Git = require( 'modules/Git' ),
-        Resizer = brackets.getModule("utils/Resizer"),
         marked = require("lib/marked"),
 
         gitPanelTemplate = require("text!html/panel.html"),
@@ -146,10 +146,12 @@ define(function (require, exports) {
         });
 
         preferences.on('change', function() {
+
             project = preferences.get( 'project' );
             issue = preferences.get( 'issue' );
 
             // only refresh information if panel is visible
+            // and the objects are different
             if( panelVisibility ) {
                 _renderIssueAndNotes();
             }

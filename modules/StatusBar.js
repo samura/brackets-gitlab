@@ -3,7 +3,8 @@ define( function( require, exports ) {
 
     // status bar
     var StatusBar = brackets.getModule( 'widgets/StatusBar' ),
-        
+        AppInit = brackets.getModule( 'utils/AppInit' ),
+
         // Extension Modules.
         Gitlab = require( 'modules/Gitlab' ),
         Strings = require( 'modules/Strings' ),
@@ -24,6 +25,8 @@ define( function( require, exports ) {
         issueSelect, // html <select>
         issueList, // project objects
         issueActions,
+        project,
+        issue,
 
         STATUS_BAR_ID = 'samura.brackets-gitlab.statusbar'
     ;
@@ -88,7 +91,6 @@ define( function( require, exports ) {
             return;
         }
 
-        var project = preferences.get( 'project' );
         Gitlab.getIssueAndSave( project.id, issueList[index-issueOptionsOffset].id );
     }
 
@@ -101,10 +103,10 @@ define( function( require, exports ) {
 
         switch(label) {
             case Strings.CLOSE_ISSUE: // close issue
-                Git.closeIssue( preferences.get( 'issue' ) );
+                Git.closeIssue( issue );
                 break;
             case Strings.MENTION_ISSUE: // close issue
-                Git.mentionIssue( preferences.get( 'issue' ) );
+                Git.mentionIssue( issue );
                 break;
             case Strings.SELECT_OTHER_ISSUE: // select another
                 Gitlab.clearIssue();
@@ -170,24 +172,27 @@ define( function( require, exports ) {
         preferences = prefs;
 
         console.log('init');
-        // detect preferences changes
-        preferences.on('change', function() {
+        // wait until the app is ready with preferences loaded
+        AppInit.appReady(function() {
+            // detect preferences changes
+            preferences.on('change', function() {
 
-            var project = preferences.get( 'project' );
-            var issue = preferences.get( 'issue' );
+                project = preferences.get( 'project' );
+                issue = preferences.get( 'issue' );
 
-            console.log('detected something');
-            // if project changed
-            if (!project) {
-                _renderProjectSelect();
-            } else if (!issue) {
-                _renderIssueSelect( project );
-            } else if (issue) {
-                _renderIssue( issue );
-            }
+                console.log('detected something');
+                // if project changed
+                if (!project) {
+                    _renderProjectSelect();
+                } else if (!issue) {
+                    _renderIssueSelect( project );
+                } else if (issue) {
+                    _renderIssue( issue );
+                }
+            });
         });
 
         $indicator = $( '<div>' );
-        StatusBar.addIndicator(STATUS_BAR_ID, $indicator, true, '', Strings.EXTENSION_NAME );
+        StatusBar.addIndicator( STATUS_BAR_ID, $indicator, true, '', Strings.EXTENSION_NAME );
     };
 } );

@@ -27,8 +27,9 @@ define(function (require, exports, module) {
     }
 
     function _clearProject() {
-        preferences.set( 'project', undefined, { location: { scope: 'project' } });
-        preferences.save();
+        console.log('clearing project');
+        preferences.set('project', undefined, { location: { scope: 'project' } });
+        _clearIssue();
     }
 
     function _getProjects( callback ) {
@@ -57,14 +58,14 @@ define(function (require, exports, module) {
         gitlabDomain.exec("issueGet", projectId, issueId).done(function(issue) {
             if(issue.state === 'opened') {
                 callback(issue);
-            }
-            else {
+            } else {
                 _issue_error(Strings.CLOSED_ISSUE_ERROR);
             }
         }).fail(_issue_error);
     }
 
     function _clearIssue() {
+        console.log('clearing issue');
         Panel.close();
         preferences.set( 'issue', undefined, { location: { scope: 'project' } });
         preferences.save();
@@ -126,6 +127,7 @@ define(function (require, exports, module) {
      * @param {function} callback
      */
     exports.getProjectAndSave = function( id , callback){
+        console.log('saving project');
         _getProject(id, function(project) {
             preferences.set('project', project, { location: { scope: 'project' } });
             preferences.save();
@@ -156,6 +158,7 @@ define(function (require, exports, module) {
 
 
     exports.getIssueAndSave = function (projectId, issueId, callback) {
+        console.log('saving issue');
         // get the updated information on the project
         _getIssue( projectId, issueId, function( issue ){
             preferences.set('issue', issue, { location: { scope: 'project' } });
@@ -173,6 +176,8 @@ define(function (require, exports, module) {
      */
     exports.notes = function( projectId, issueId, callback ) {
         console.log('get notes');
+        console.log(preferences.get('project'));
+        console.log(preferences.get('issue'));
         gitlabDomain.exec('notesList', projectId, issueId)
             .done(callback)
             .fail(_error);
