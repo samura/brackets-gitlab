@@ -5,6 +5,7 @@ define(function (require, exports, module) {
         NodeDomain = brackets.getModule("utils/NodeDomain"),
         Strings = require( 'modules/Strings' ),
         ErrorHandler = require( 'modules/ErrorHandler' ),
+        Panel = require( 'modules/Panel' ),
 
         gitlabDomain = new NodeDomain("gitlab", ExtensionUtils.getModulePath(module, "../node/GitlabDomain")),
         preferences;
@@ -66,6 +67,7 @@ define(function (require, exports, module) {
     }
 
     function _clearIssue() {
+        Panel.close();
         preferences.set( 'issue', undefined, { location: { scope: 'project' } });
         preferences.save();
     }

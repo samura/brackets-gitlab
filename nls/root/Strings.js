@@ -15,14 +15,14 @@ define( {
 
     // STATUS BAR
     SELECT_PROJECT: 'Select a Gitlab Project',
-    SELECT_ISSUE: 'Select an issue to work on',
-    SELECT_OTHER_PROJECT: 'Connect with another project',
+    SELECT_ISSUE: 'Select an issue',
+    SELECT_OTHER_PROJECT: 'Change project',
 
     COMMIT_MESSAGE_CLOSE: 'closes ##ID# - #TITLE#',
     COMMIT_MESSAGE_MENTION: '##ID# - #TITLE#',
     CLOSE_ISSUE: 'Commit & Close',
     MENTION_ISSUE: 'Commit',
-    SELECT_OTHER_ISSUE: 'Select another issue',
+    SELECT_OTHER_ISSUE: 'Change issue',
     
     // PANEL
     OPEN_ON_GITLAB: 'Open on Gitlab',

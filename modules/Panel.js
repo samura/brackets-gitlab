@@ -18,13 +18,28 @@ define(function (require, exports) {
         $gitPanel = $(null),
         project,
         issue,
+        panel,
         preferences
     ;
 
     /**
      * Show the panel
      */
+    function _toggle () {
+        if( !panel ) {
+            _show();
+        } else {
+            _hide();
+        }
+    }
+
+    /**
+     * Show the panel
+     */
     function _show () {
+        panel = true;
+        preferences.set( 'openPanel', true );
+        preferences.save();
         Resizer.show($gitPanel);
     }
 
@@ -32,6 +47,9 @@ define(function (require, exports) {
      * Hide the panel
      */
     function _hide () {
+        panel = false;
+        preferences.set( 'openPanel', false );
+        preferences.save();
         Resizer.hide($gitPanel);
     }
 
@@ -95,6 +113,7 @@ define(function (require, exports) {
     exports.init = function ( prefs ) {
 
         preferences = prefs;
+        panel = preferences.get( 'openPanel' );
 
         // Add panel
         var panelHtml = Mustache.render(gitPanelTemplate, {
@@ -105,6 +124,12 @@ define(function (require, exports) {
         gitPanel = WorkspaceManager.createBottomPanel(PANEL_ID, $panelHtml, 100);
         $gitPanel = gitPanel.$panel;
 
+        // set same state as it was on last brackets start
+        if( panel ) {
+            _show();
+        }
+
+        // triggers
         $gitPanel.on("click", "#close", _hide);
         $gitPanel.on("click", "#close-issue", function() {
             Git.closeIssue( issue );
@@ -112,7 +137,6 @@ define(function (require, exports) {
         $gitPanel.on("click", "#mention-issue", function() {
             Git.mentionIssue(issue );
         });
-
         $gitPanel.on("click", "#refresh", function() {
             $gitPanel.find('.issue,.notes').html('loading...');
             _disableBtn( $gitPanel.find('#refresh') );
@@ -131,4 +155,5 @@ define(function (require, exports) {
 
     exports.show = _show;
     exports.close = _hide;
+    exports.toggle = _toggle;
 });

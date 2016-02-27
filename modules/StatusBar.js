@@ -160,9 +160,7 @@ define( function( require, exports ) {
 
         // save the selected gitlab issue
         issueActions.on( 'select', _issueAction );
-        $view.on( 'click', function(){
-            Panel.show();
-        } );
+        $view.on( 'click', Panel.toggle );
     }
 
     /**
