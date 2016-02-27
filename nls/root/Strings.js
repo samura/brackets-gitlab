@@ -20,13 +20,13 @@ define( {
 
     COMMIT_MESSAGE_CLOSE: 'closes ##ID# - #TITLE#',
     COMMIT_MESSAGE_MENTION: '##ID# - #TITLE#',
-    CLOSE_ISSUE: 'Close this issue',
-    MENTION_ISSUE: 'Commit with link to the issue',
-    SELECT_OTHER_ISSUE: 'Work on another issue',
+    CLOSE_ISSUE: 'Commit & Close',
+    MENTION_ISSUE: 'Commit',
+    SELECT_OTHER_ISSUE: 'Select another issue',
     
     // PANEL
-    OPEN_ON_GITLAB: 'Open Issue on Gitlab',
-    REFRESH_ISSUE: 'Refresh Issue',
+    OPEN_ON_GITLAB: 'Open on Gitlab',
+    REFRESH_ISSUE: 'Refresh',
 
     //ERROR DIALOG
     ISSUE_ERROR: 'There was a problem fetching the issue',

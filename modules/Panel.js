@@ -4,9 +4,9 @@ define(function (require, exports) {
     var WorkspaceManager = brackets.getModule("view/WorkspaceManager"),
         Strings = require( 'modules/Strings' ),
         Gitlab = require( 'modules/Gitlab' ),
+        Git = require( 'modules/Git' ),
         Resizer = brackets.getModule("utils/Resizer"),
         marked = require("lib/marked"),
-
 
         gitPanelTemplate = require("text!html/panel.html"),
         gitPanelIssueTemplate = require("text!html/panel-issue.html"),
@@ -106,8 +106,14 @@ define(function (require, exports) {
         $gitPanel = gitPanel.$panel;
 
         $gitPanel.on("click", "#close", _hide);
-        $gitPanel.on("click", "#refresh", function() {
+        $gitPanel.on("click", "#close-issue", function() {
+            Git.closeIssue( issue );
+        });
+        $gitPanel.on("click", "#mention-issue", function() {
+            Git.mentionIssue(issue );
+        });
 
+        $gitPanel.on("click", "#refresh", function() {
             $gitPanel.find('.issue,.notes').html('loading...');
             _disableBtn( $gitPanel.find('#refresh') );
             Gitlab.getIssueAndSave( issue.project_id, issue.id, function(){
