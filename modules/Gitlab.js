@@ -72,6 +72,7 @@ define(function (require, exports, module) {
     }
 
     function _update() {
+        console.log('updating');
         var project = preferences.get( 'project' );
         var issue = preferences.get( 'issue' );
 
@@ -93,7 +94,7 @@ define(function (require, exports, module) {
             privateKey: preferences.get( 'privateKey' )
         };
 
-        var dataUpdateTime = preferences.get( 'dataUpdateTime');
+        var dataUpdateTime = preferences.get( 'dataUpdateTime' );
 
         gitlabDomain
             .exec("connect", auth)
@@ -101,6 +102,8 @@ define(function (require, exports, module) {
             .fail(_error);
 
         setInterval(_update, dataUpdateTime * 60000);
+        // force an update after everything is loaded
+        setTimeout(_update, 5000);
     };
 
     /**
@@ -176,8 +179,6 @@ define(function (require, exports, module) {
      */
     exports.notes = function( projectId, issueId, callback ) {
         console.log('get notes');
-        console.log(preferences.get('project'));
-        console.log(preferences.get('issue'));
         gitlabDomain.exec('notesList', projectId, issueId)
             .done(callback)
             .fail(_error);

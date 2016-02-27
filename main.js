@@ -1,13 +1,10 @@
-/*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
-/*global define, $, brackets */
-
-/** Simple extension that adds a "File > Hello World" menu item. Inserts "Hello, world!" at cursor pos. */
 define(function (require, exports, module) {
     "use strict";
 
     var CommandManager = brackets.getModule("command/CommandManager"),
         PreferencesManager = brackets.getModule( 'preferences/PreferencesManager' ),
         ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
+        AppInit = brackets.getModule('utils/AppInit'),
 
         Strings = require( 'modules/Strings' ),
         Defaults = require( 'modules/Defaults' ),
@@ -28,30 +25,32 @@ define(function (require, exports, module) {
         COMMAND_ID_SETTINGS = 'samura.brackets-gitlab.settings'
     ;
 
-    // Register extension.
-    CommandManager.register( Strings.EXTENSION_NAME, COMMAND_ID_SETTINGS, showSettingsDialog );
-
-    // Add command to menu.
-    if ( menu !== undefined ) {
-        menu.addMenuDivider();
-        menu.addMenuItem( COMMAND_ID_SETTINGS );
-        menu.addMenuDivider();
-    }
-
     // Show settings dialog.
-    function showSettingsDialog() {
+    function _showSettingsDialog() {
         SettingsDialog.show( settings );
     }
 
-    ExtensionUtils.loadStyleSheet(module, 'styles/style.css');
+    AppInit.appReady(function () {
+        // Register extension.
+        CommandManager.register( Strings.EXTENSION_NAME, COMMAND_ID_SETTINGS, _showSettingsDialog );
 
-    // load defaults
-    Defaults.init( settings );
+        // Add command to menu.
+        if ( menu !== undefined ) {
+            menu.addMenuDivider();
+            menu.addMenuItem( COMMAND_ID_SETTINGS );
+            menu.addMenuDivider();
+        }
 
-    // start gitlab
-    Gitlab.init( settings );
-    Git.init( settings );
+        ExtensionUtils.loadStyleSheet(module, 'styles/style.css');
 
-    StatusBar.init( settings );
-    Panel.init( settings );
+        // load defaults
+        Defaults.init( settings );
+
+        // start gitlab
+        Gitlab.init( settings );
+        Git.init( settings );
+
+        StatusBar.init( settings );
+        Panel.init( settings );
+    });
 });

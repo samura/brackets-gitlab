@@ -166,33 +166,41 @@ define( function( require, exports ) {
     }
 
     /**
+     * base render method
+     */
+    function _render(event, data) {
+        // only changes on the project or issue
+        if(typeof data !== 'undefined' &&
+           data.ids.indexOf('project') === -1 &&
+           data.ids.indexOf('issue') === -1) {
+            return;
+        }
+
+        project = preferences.get( 'project' );
+        issue = preferences.get( 'issue' );
+
+        console.log('detected something');
+        // if project changed
+        if (!project) {
+            _renderProjectSelect();
+        } else if (!issue) {
+            _renderIssueSelect( project );
+        } else if (issue) {
+            _renderIssue( issue );
+        }
+    }
+
+    /**
 	 * Exposed method to show dialog.
 	 */
     exports.init = function( prefs ) {
         preferences = prefs;
 
-        console.log('init');
-        // wait until the app is ready with preferences loaded
-        AppInit.appReady(function() {
-            // detect preferences changes
-            preferences.on('change', function() {
-
-                project = preferences.get( 'project' );
-                issue = preferences.get( 'issue' );
-
-                console.log('detected something');
-                // if project changed
-                if (!project) {
-                    _renderProjectSelect();
-                } else if (!issue) {
-                    _renderIssueSelect( project );
-                } else if (issue) {
-                    _renderIssue( issue );
-                }
-            });
-        });
-
         $indicator = $( '<div>' );
         StatusBar.addIndicator( STATUS_BAR_ID, $indicator, true, '', Strings.EXTENSION_NAME );
+
+        // detect preferences changes
+        preferences.on('change', _render);
+        _render();
     };
 } );

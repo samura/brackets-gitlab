@@ -2,8 +2,8 @@ define(function (require, exports) {
     "use strict";
 
     var WorkspaceManager = brackets.getModule("view/WorkspaceManager"),
-        Strings = require( 'modules/Strings' ),
         Resizer = brackets.getModule("utils/Resizer"),
+        Strings = require( 'modules/Strings' ),
         Gitlab = require( 'modules/Gitlab' ),
         Git = require( 'modules/Git' ),
         marked = require("lib/marked"),
@@ -124,11 +124,6 @@ define(function (require, exports) {
         gitPanel = WorkspaceManager.createBottomPanel(PANEL_ID, $panelHtml, 100);
         $gitPanel = gitPanel.$panel;
 
-        // set same state as it was on last brackets start
-        if( panelVisibility ) {
-            _show();
-        }
-
         // triggers
         $gitPanel.on("click", "#close", _hide);
         $gitPanel.on("click", "#close-issue", function() {
@@ -145,14 +140,21 @@ define(function (require, exports) {
             });
         });
 
-        preferences.on('change', function() {
+        preferences.on('change', function(event, changes) {
 
             project = preferences.get( 'project' );
             issue = preferences.get( 'issue' );
 
+            // only update if there's a change on the isse or the openPanel
+            if( changes.ids.indexOf('issue') === -1 &&
+               changes.ids.indexOf('openPanel') === -1 ) {
+                return;
+            }
+
             // only refresh information if panel is visible
             // and the objects are different
             if( panelVisibility ) {
+                _show();
                 _renderIssueAndNotes();
             }
         });
