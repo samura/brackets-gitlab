@@ -83,10 +83,7 @@ define(function (require, exports) {
             Gitlab.notes( issue.project_id, issue.id, function( notes ) {
 
                 function compare(a,b) {
-                    var c = new Date(Date.parse(a.created_at)),
-                        d = new Date(Date.parse(b.created_at));
-
-                    return (c.getTime() < d.getTime()) ? 1 : -1;
+                    return (Date.parse(a.created_at) < Date.parse(b.created_at)) ? 1 : -1;
                 }
                 notes.sort(compare);
 
