@@ -1,4 +1,8 @@
 <div>
-    <h2>{{title}}</h2>
+    <h2>
+        <span>{{title}}</span><br/>
+        <small>{{author}} opened this issue {{timeago}}. {{#assignee}}Assigned to {{name}}{{/assignee}}</small>
+    </h2>
+
     <p>{{{description}}}</p>
 </div>

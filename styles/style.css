@@ -37,6 +37,12 @@
 }
 #gitlab-panel .issue h2 {
     margin-top: 0;
+    line-height: 29px;
+}
+#gitlab-panel .issue h2 small {
+    display: block;
+    font-size: 12px;
+    padding: 5px 0;
 }
 
 #gitlab-panel .notes {

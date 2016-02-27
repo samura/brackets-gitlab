@@ -76,7 +76,10 @@ define(function (require, exports) {
             // render the left side of the panel - issue information
             var panelIssueHtml = Mustache.render(gitPanelIssueTemplate, {
                 title: issue.title,
-                description: marked(issue.description)
+                description: marked(issue.description),
+                author: issue.author.name,
+                timeago: timeago(Date.parse(issue.created_at)),
+                assignee: issue.assignee
             });
 
             $gitPanel.find('.issue').html(panelIssueHtml);
