@@ -1,5 +1,5 @@
 {
   "undef": true,
   "unused": true,
-  "predef": [ "define", "$", "Mustache", "brackets", "setTimeout", "setInterval", "clearInterval" ]
+  "predef": [ "define", "$", "Mustache", "brackets", "setTimeout", "setInterval", "clearInterval", "require" ]
 }

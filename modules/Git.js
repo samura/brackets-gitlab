@@ -2,11 +2,16 @@ define( function( require, exports ) {
     'use strict';
 
     var Strings = require( 'modules/Strings' ),
+        GitlabPanel = require( 'modules/Panel' ),
         ErrorHandler = require( 'modules/ErrorHandler' ),
         preferences;
 
     function _doCommit ( message ) {
-        // open the panel
+
+        // close gitlab panel
+        GitlabPanel.close();
+
+        // open the git panel
         $('#git-toolbar-icon:not(.on)').click();
 
         var stageAll = preferences.get ( 'stageAll' );
@@ -17,7 +22,6 @@ define( function( require, exports ) {
         }
 
         // select all files if stage all is checked on settings
-
         if(stageAll && !$('.check-all.git-available').prop('checked')) {
             $('.check-all.git-available').click();
         }

@@ -110,8 +110,6 @@ define(function (require, exports) {
         preferences.on('change', _renderIssueAndNotes);
     };
 
-    /**
-     * open the panel
-     */
     exports.show = _show;
+    exports.close = _hide;
 });
