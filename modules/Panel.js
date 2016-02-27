@@ -64,7 +64,7 @@ define(function (require, exports) {
             Gitlab.notes( issue.project_id, issue.id, function( notes ) {
                 // render the left side of the panel - issue information
                 var panelNotesHtml = Mustache.render(gitPanelNotesTemplate, {
-                    notes: notes,
+                    notes: notes.reverse(),
                     renderNote: function() {
                         return marked(this.body);
                     },
