@@ -3,7 +3,7 @@ define( function( require, exports ) {
 
     // status bar
     var StatusBar = brackets.getModule( 'widgets/StatusBar' ),
-        AppInit = brackets.getModule( 'utils/AppInit' ),
+        NativeApp = brackets.getModule( 'utils/NativeApp' ),
 
         // Extension Modules.
         Gitlab = require( 'modules/Gitlab' ),
@@ -13,7 +13,7 @@ define( function( require, exports ) {
         DropdownButton = brackets.getModule( 'widgets/DropdownButton' ).DropdownButton,
 
         // dropdown values
-        issueActionList = [Strings.SELECT_OTHER_ISSUE, '---', Strings.CLOSE_ISSUE, Strings.MENTION_ISSUE],
+        issueActionList = [Strings.SELECT_OTHER_ISSUE, Strings.OPEN_PROJECT, '---', Strings.CLOSE_ISSUE, Strings.MENTION_ISSUE],
 
         // Variables.
         $indicator  = $(null),
@@ -110,6 +110,9 @@ define( function( require, exports ) {
                 break;
             case Strings.SELECT_OTHER_ISSUE: // select another
                 Gitlab.clearIssue();
+                break;
+            case Strings.OPEN_PROJECT: // select another
+                NativeApp.openURLInDefaultBrowser(project.web_url);
                 break;
         }
     }

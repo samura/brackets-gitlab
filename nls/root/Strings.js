@@ -17,6 +17,7 @@ define( {
     SELECT_PROJECT: 'Select a Gitlab Project',
     SELECT_ISSUE: 'Select an issue',
     SELECT_OTHER_PROJECT: 'Change project',
+    OPEN_PROJECT: 'Open Project',
 
     COMMIT_MESSAGE_CLOSE: 'closes ##ID# - #TITLE#',
     COMMIT_MESSAGE_MENTION: '##ID# - #TITLE#',
