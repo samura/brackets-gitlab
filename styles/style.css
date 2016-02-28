@@ -1,9 +1,7 @@
 .view-issue {
-    padding: 4px 12px;
+    padding: 12px;
     content: "";
-    background: url("images/search.svg") 0 0 no-repeat;
-    width: 13px;
-    height: 13px;
+    background: url("images/eye.svg") 0 0 no-repeat;
     background-position: center;
 }
 
@@ -76,4 +74,29 @@
 }
 #gitlab-panel .toolbar .right-icons .btn-group {
     margin-right: 25px;
+}
+
+#gitlab-panel .toolbar .btn {
+    padding: 4px 12px;
+    content: "";
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 15px;
+    width: 10px;
+}
+#gitlab-panel .toolbar #mention-issue {
+    background-image: url("images/commit.svg");
+}
+
+#gitlab-panel .toolbar #close-issue {
+    background-image: url("images/commit_close.svg");
+}
+#gitlab-panel .toolbar #close-issue {
+    background-image: url("images/commit_close.svg");
+}
+#gitlab-panel .toolbar #open-on-gitlab {
+    background-image: url("images/link.svg");
+}
+#gitlab-panel .toolbar #refresh {
+    background-image: url("images/refresh.svg");
 }
