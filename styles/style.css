@@ -100,3 +100,7 @@
 #gitlab-panel .toolbar #refresh {
     background-image: url("images/refresh.svg");
 }
+
+#gitlab-add-issue {
+    background: url("images/add_issue.svg") no-repeat center;
+}

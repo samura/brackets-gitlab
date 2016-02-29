@@ -8,6 +8,9 @@ define( {
 	RESET:  "Reset",
     CLOSE:  "Close",
 
+    // TOOLBAR
+    ADD_ISSUE: 'Add Issue',
+
 	// SETTINGS DIALOG
 	SETTINGS_DIALOG_TITLE: 'Gitlab Configuration',
     GITLAB_ERROR: 'There was a problem connection with Gitlab',

@@ -1,10 +1,11 @@
 define(function (require, exports, module) {
-    "use strict";
+    'use strict';
 
-    var CommandManager = brackets.getModule("command/CommandManager"),
+    var CommandManager = brackets.getModule('command/CommandManager'),
         PreferencesManager = brackets.getModule( 'preferences/PreferencesManager' ),
         ExtensionUtils = brackets.getModule('utils/ExtensionUtils'),
         AppInit = brackets.getModule('utils/AppInit'),
+        NativeApp = brackets.getModule('utils/NativeApp'),
 
         Strings = require( 'modules/Strings' ),
         Defaults = require( 'modules/Defaults' ),
@@ -14,7 +15,7 @@ define(function (require, exports, module) {
         Panel = require( 'modules/Panel' ),
 
         // menu
-        Menus = brackets.getModule("command/Menus"),
+        Menus = brackets.getModule('command/Menus'),
         menu = Menus.getMenu( Menus.AppMenuBar.VIEW_MENU ),
 
         // settings
@@ -22,7 +23,12 @@ define(function (require, exports, module) {
         settings = PreferencesManager.getExtensionPrefs( 'samura.bracketsGitlab' ),
 
         // strings
-        COMMAND_ID_SETTINGS = 'samura.brackets-gitlab.settings'
+        COMMAND_ID_SETTINGS = 'samura.brackets-gitlab.settings',
+
+        $icon = $('<a id="gitlab-add-issue" href="#"></a>')
+    .attr('title', Strings.ADD_ISSUE)
+    .addClass('loading')
+    .appendTo($('#main-toolbar .buttons'))
     ;
 
     // Show settings dialog.
@@ -52,5 +58,14 @@ define(function (require, exports, module) {
 
         StatusBar.init( settings );
         Panel.init( settings );
+
+        // add issue trigger
+        $icon.on('click', function(){
+            var project = settings.get( 'project' );
+
+            if( project ) {
+                NativeApp.openURLInDefaultBrowser( project.web_url + '/issues/new' );
+            }
+        });
     });
 });
