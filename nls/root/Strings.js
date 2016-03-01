@@ -21,6 +21,7 @@ define( {
     SELECT_ISSUE: 'Select an issue',
     SELECT_OTHER_PROJECT: 'Change project',
     OPEN_PROJECT: 'Open Project',
+    NO_MORE_ISSUES: 'No more open issues',
 
     COMMIT_MESSAGE_CLOSE: 'closes ##ID# - #TITLE#',
     COMMIT_MESSAGE_MENTION: '##ID# - #TITLE#',

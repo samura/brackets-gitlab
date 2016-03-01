@@ -18,8 +18,8 @@ define( function( require, exports ) {
         // Variables.
         $indicator  = $(null),
         projectSelect, // html <select>
-        issueOptions = [Strings.SELECT_OTHER_PROJECT, '---'],
-        issueOptionsOffset = issueOptions.length,
+        baseIssueOptions = [Strings.SELECT_OTHER_PROJECT, '---'],
+        issueOptions,
         projectList,
         preferences,
         issueSelect, // html <select>
@@ -55,13 +55,23 @@ define( function( require, exports ) {
         Gitlab.issues(project.id, function( issues ){
 
             issueList = issues;
+            // copy the base options
+            issueOptions = baseIssueOptions.slice();
 
-            issues.forEach(function(item, index) {
-                issueOptions[index+issueOptionsOffset] = item.title;
+            issues.forEach(function(item) {
+                var label = item.title;
                 if(item.assignee) {
-                    issueOptions[index+issueOptionsOffset] += ' (' + item.assignee.name + ')';
+                    label += ' (' + item.assignee.name + ')';
                 }
+
+                issueOptions.push( label );
             });
+
+            // if no issue
+            if ( issues.length === 0 ) {
+                issueOptions.push( Strings.NO_MORE_ISSUES );
+            }
+
             issueSelect.items = issueOptions;
             issueSelect.refresh();
         });
@@ -91,7 +101,7 @@ define( function( require, exports ) {
             return;
         }
 
-        Gitlab.getIssueAndSave( project.id, issueList[index-issueOptionsOffset].id );
+        Gitlab.getIssueAndSave( project.id, issueList[index-baseIssueOptions.length].id );
     }
 
     /**
@@ -139,7 +149,7 @@ define( function( require, exports ) {
     function _renderIssueSelect( project ) {
 
         // set the dropdown and select event listeners
-        issueSelect = new DropdownButton( Strings.SELECT_ISSUE, [] );
+        issueSelect = new DropdownButton( Strings.SELECT_ISSUE, [], _renderItem );
         issueSelect.$button.addClass( 'btn-status-bar' );
         _populateIssues( project );
         $indicator.html( issueSelect.$button );
@@ -166,6 +176,18 @@ define( function( require, exports ) {
         // save the selected gitlab issue
         issueActions.on( 'select', _issueAction );
         $view.on( 'click', Panel.toggle );
+    }
+
+    /**
+     * render items: active or disabled
+     */
+    function _renderItem(item) {
+
+        if(item === Strings.NO_MORE_ISSUES) {
+            return { html: Strings.NO_MORE_ISSUES, active: false };
+        }
+
+        return item;
     }
 
     /**

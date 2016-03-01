@@ -1,4 +1,4 @@
-.view-issue {
+#samura-brackets-gitlab-statusbar .view-issue {
     padding: 12px;
     content: "";
     background: url("images/eye.svg") 0 0 no-repeat;
