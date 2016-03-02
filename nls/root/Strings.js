@@ -17,7 +17,9 @@ define( {
     BRACKETS_GITLAB_ERROR: 'Brackets Gitlab encountered an error\u2026',
 
     // STATUS BAR
+    LOADING_PROJECTS: 'Loading Projects...',
     SELECT_PROJECT: 'Select a Gitlab Project',
+    LOADING_ISSUES: 'Loading Issues...',
     SELECT_ISSUE: 'Select an issue',
     SELECT_OTHER_PROJECT: 'Change project',
     OPEN_PROJECT: 'Open Project',

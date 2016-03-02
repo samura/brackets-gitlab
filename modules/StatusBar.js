@@ -44,7 +44,9 @@ define( function( require, exports ) {
                 projectOptions[index] = item.name_with_namespace + ' (' + item.open_issues_count + ')';
             });
             projectSelect.items = projectOptions;
+            console.log(projectSelect);
             projectSelect.refresh();
+            projectSelect.$button.text(Strings.SELECT_PROJECT);
         });
     }
 
@@ -74,6 +76,7 @@ define( function( require, exports ) {
 
             issueSelect.items = issueOptions;
             issueSelect.refresh();
+            issueSelect.$button.text(Strings.SELECT_ISSUE);
         });
     }
 
@@ -132,11 +135,12 @@ define( function( require, exports ) {
      */
     function _renderProjectSelect() {
         // set the dropdown and select event listeners
-        projectSelect = new DropdownButton(Strings.SELECT_PROJECT, []);
+        projectSelect = new DropdownButton(Strings.LOADING_PROJECTS, []);
         projectSelect.$button.addClass('btn-status-bar');
+
         _populateProjects();
         $indicator.html( projectSelect.$button );
-        StatusBar.updateIndicator( STATUS_BAR_ID, true, '', Strings.SELECT_ISSUE );
+        StatusBar.updateIndicator( STATUS_BAR_ID, true, '', Strings.PROJECT_SELECT );
 
         // save the selected gitlab project
         projectSelect.on('select', _projectSelected);
@@ -149,7 +153,7 @@ define( function( require, exports ) {
     function _renderIssueSelect( project ) {
 
         // set the dropdown and select event listeners
-        issueSelect = new DropdownButton( Strings.SELECT_ISSUE, [], _renderItem );
+        issueSelect = new DropdownButton( Strings.LOADING_ISSUES, [], _renderItem );
         issueSelect.$button.addClass( 'btn-status-bar' );
         _populateIssues( project );
         $indicator.html( issueSelect.$button );
